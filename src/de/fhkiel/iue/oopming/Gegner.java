@@ -7,7 +7,6 @@ public class Gegner extends FlyingObject {
     private Color gcolor;
     private int gradius = 30;
 
-
     public Gegner() {
         int feld = gradius / 2 + (int) (Math.random() * (Main.width - gradius / 2 + 1));
         gcenter = new Position(feld, -(int) (Math.random() * (Main.width - gradius / 2)));
