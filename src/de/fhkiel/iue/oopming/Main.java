@@ -11,23 +11,25 @@ public class Main extends PApplet {
     int lamsamer;
     public Player player = new Player();
     public Gegner gegner = new Gegner();
-    ArrayList bullets = new ArrayList();
+
+//    public Geschoss geschoss = new Geschoss(0, 0);
+
+    // Array für Gegner
     List<Gegner> gegners = new ArrayList<Gegner>();
+    // Array für Geschosse
     List<Geschoss> geschosse = new ArrayList<Geschoss>();
 
     public static void main(String[] args) {
         PApplet.main("de.fhkiel.iue.oopming.Main");
-
     }
 
     public void setup() {
         noCursor();
         noStroke();
-        //创建10个敌机
+        //Erstelle 8 Instanzen des Gegners
         for (int i = 0; i < 8; i++) {
             gegners.add(new Gegner());
         }
-
     }
 
     @Override
@@ -37,36 +39,50 @@ public class Main extends PApplet {
         size(width, height);
         player.setpCenter(new Position(width / 2, height - 100));
         player.setColor(new Color(100, 100, 200));
+        gegner.setGcenter(new Position(0,0));
+//        geschoss.setGeCenter(new Position(0,0));
     }
 
     @Override
     public void draw() {
         background(0);
-        //让敌机往下移动
+        //
         for (int i = 0; i < gegners.size(); i++) {
-            //获取敌机实例
-            Gegner gegner = gegners.get(i);
+            //get Instance von Gegner
+            gegner = gegners.get(i);
             gegner.draw(this);
             gegner.move();
             if (gegner.ausserhalbSpielFeld()) {
-                //删除敌机
+                //Wenn Gegner außerhalber dem Spielfeld, löscht der Gegner
                 gegners.remove(gegner);
-                //创建新敌机
+                //ein neuer Gegner herstellen
                 gegners.add(new Gegner());
             }
         }
-
+// lasst Geschoss nach bestimmter Zeit erzeugen
         lamsamer++;
-        if (lamsamer % 6 == 0) {
+        if (lamsamer % 4 == 0) {
             Geschoss geschoss = new Geschoss((int) player.getpCenter().getX(), (int) player.getpCenter().getY());
             geschosse.add(geschoss);
         }
+
         for (int i = 0; i < geschosse.size(); i++) {
             Geschoss tempGeschoss = geschosse.get(i);
             tempGeschoss.draw(this);
             tempGeschoss.move();
             if (tempGeschoss.ausserhalbSpielFeld()) {
                 geschosse.remove(tempGeschoss);
+            }
+        }
+
+        for (int i = 0; i < gegners.size(); i++) {
+            Gegner gegner1 = gegners.get(i);
+            for (int j = 0; j < geschosse.size(); j++) {
+                Geschoss geschoss = geschosse.get(j);
+                if(geschoss.istErschossen(gegner1,geschoss)) {
+                    gegners.remove(gegner1);
+                    gegners.add(new Gegner());
+                }
             }
         }
         player.draw(this);
