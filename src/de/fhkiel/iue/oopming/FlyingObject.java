@@ -22,15 +22,10 @@ abstract public class FlyingObject {
     public void setColor(Color color) {
         this.color = color;
     }
-    //    public boolean istErschossen(Geschoss geschoss) {
-//        float x1 = this.center.getX();
-//        float x2 = this.center.getX() + this.imageWidth;
-//        float y1 = this.center.getY();
-//        float y2 = this.center.getY() + this.imageHeight;
-//        float x = geschoss.x;
-//        float y = geschoss.y;
-//        return x > x1 && x < x2 && y > y1 && y < y2;
-//    }
-
+    public boolean istErschossen(Gegner g, Geschoss ge) {
+        return (g.getGcenter().getX() - g.getGradius() / 2 < ge.getGeCenter().getX() - ge.getGeRadius() / 2 &&
+                g.getGcenter().getX() + g.getGradius() / 2  > ge.getGeCenter().getX() + ge.getGeRadius() / 2 &&
+                g.getGcenter().getY() + g.getGradius() / 2 > ge.getGeCenter().getY() + ge.getGeRadius() / 2);
+    }
     abstract public boolean ausserhalbSpielFeld();
 }

@@ -10,6 +10,22 @@ public class Geschoss extends FlyingObject {
         geCenter = new Position(x, y);
     }
 
+    public int getGeRadius() {
+        return geRadius;
+    }
+
+    public void setGeRadius(int geRadius) {
+        this.geRadius = geRadius;
+    }
+
+    public Position getGeCenter() {
+        return geCenter;
+    }
+
+    public void setGeCenter(Position geCenter) {
+        this.geCenter = geCenter;
+    }
+
     public void draw(PApplet pApplet) {
         pApplet.fill(255);
         pApplet.ellipse(geCenter.getX(), geCenter.getY(), 10, 10);
