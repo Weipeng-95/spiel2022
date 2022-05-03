@@ -1,6 +1,7 @@
 package de.fhkiel.iue.oopming;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ public class Main extends PApplet {
     static int width = 500;
     static int height = 800;
     int lamsamer;
-    public Player player = new Player();
+    public Player player = new Player(this);
     public Gegner gegner = new Gegner();
 
 //    public Geschoss geschoss = new Geschoss(0, 0);
@@ -26,6 +27,7 @@ public class Main extends PApplet {
     public void setup() {
         noCursor();
         noStroke();
+        imageMode(CENTER);
         //Erstelle 8 Instanzen des Gegners
         for (int i = 0; i < 8; i++) {
             gegners.add(new Gegner());
@@ -81,6 +83,7 @@ public class Main extends PApplet {
                 Geschoss geschoss = geschosse.get(j);
                 if(geschoss.istErschossen(gegner1,geschoss)) {
                     gegners.remove(gegner1);
+                    geschosse.remove(geschoss);
                     gegners.add(new Gegner());
                 }
             }
