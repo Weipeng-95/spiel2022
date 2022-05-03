@@ -1,11 +1,10 @@
 package de.fhkiel.iue.oopming;
 
+import processing.core.PImage;
+
 abstract public class FlyingObject {
-    //    protected PImage image;
-//    protected float imageWidth;
-//    protected float imageHeight;
-    protected Position center;
-    protected Color color;
+    private Position center;
+    private Color color;
 
     public Position getCenter() {
         return center;
@@ -22,10 +21,6 @@ abstract public class FlyingObject {
     public void setColor(Color color) {
         this.color = color;
     }
-    public boolean istErschossen(Gegner g, Geschoss ge) {
-        return (g.getGcenter().getX() - g.getGradius() / 2 < ge.getGeCenter().getX() - ge.getGeRadius() / 2 &&
-                g.getGcenter().getX() + g.getGradius() / 2  > ge.getGeCenter().getX() + ge.getGeRadius() / 2 &&
-                g.getGcenter().getY() + g.getGradius() / 2 > ge.getGeCenter().getY() + ge.getGeRadius() / 2);
-    }
+
     abstract public boolean ausserhalbSpielFeld();
 }
