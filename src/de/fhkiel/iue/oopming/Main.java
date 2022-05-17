@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends PApplet {
-    static int width = 500;
-    static int height = 800;
+    static final int WIDTH = 500;
+    static final int HEIGHT = 800;
     int lamsamer;
-    public Player player = new Player(this);
+    public Player player = new Player();
     public Gegner gegner = new Gegner();
 
 //    public Geschoss geschoss = new Geschoss(0, 0);
@@ -32,17 +32,13 @@ public class Main extends PApplet {
         for (int i = 0; i < 8; i++) {
             gegners.add(new Gegner());
         }
+        gegner.getColor();
     }
 
     @Override
     public void settings() {
         // Spielfeld
-
-        size(width, height);
-        player.setpCenter(new Position(width / 2, height - 100));
-        player.setColor(new Color(100, 100, 200));
-        gegner.setGcenter(new Position(0,0));
-//        geschoss.setGeCenter(new Position(0,0));
+        size(WIDTH, HEIGHT);
     }
 
     @Override
@@ -81,7 +77,7 @@ public class Main extends PApplet {
             Gegner gegner1 = gegners.get(i);
             for (int j = 0; j < geschosse.size(); j++) {
                 Geschoss geschoss = geschosse.get(j);
-                if(geschoss.istErschossen(gegner1,geschoss)) {
+                if (geschoss.istErschossen(gegner1, geschoss)) {
                     gegners.remove(gegner1);
                     geschosse.remove(geschoss);
                     gegners.add(new Gegner());

@@ -6,19 +6,11 @@ import processing.core.PImage;
 public class Geschoss extends FlyingObject {
     private PImage geschossImage;
     private Position geCenter;
-    private int geRadius = 4;
 
     public Geschoss(int x, int y) {
         geCenter = new Position(x, y);
     }
 
-    public int getGeRadius() {
-        return geRadius;
-    }
-
-    public void setGeRadius(int geRadius) {
-        this.geRadius = geRadius;
-    }
 
     public Position getGeCenter() {
         return geCenter;
@@ -29,8 +21,6 @@ public class Geschoss extends FlyingObject {
     }
 
     public void draw(PApplet pApplet) {
-//        pApplet.fill(255);
-//        pApplet.ellipse(geCenter.getX(), geCenter.getY(), 10, 10);
         geschossImage = pApplet.loadImage("src/de/fhkiel/iue/oopming/image/Geschoss.png");
         pApplet.image(geschossImage, geCenter.getX(), geCenter.getY());
     }
@@ -40,12 +30,12 @@ public class Geschoss extends FlyingObject {
     }
 
     public boolean istErschossen(Gegner g, Geschoss ge) {
-        return (g.getGcenter().getX() - g.getGradius() / 2 < ge.getGeCenter().getX() - ge.getGeRadius() / 2 &&
-                g.getGcenter().getX() + g.getGradius() / 2  > ge.getGeCenter().getX() + ge.getGeRadius() / 2 &&
-                g.getGcenter().getY() + g.getGradius() / 2 > ge.getGeCenter().getY() + ge.getGeRadius() / 2);
+        return (g.getgCenter().getX() - g.getGradius() / 2 < ge.getGeCenter().getX() - ge.geschossImage.width / 2 &&
+                g.getgCenter().getX() + g.getGradius() / 2  > ge.getGeCenter().getX() + ge.geschossImage.width / 2 &&
+                g.getgCenter().getY() + g.getGradius() / 2 > ge.getGeCenter().getY() + ge.geschossImage.height / 2);
     }
     @Override
     public boolean ausserhalbSpielFeld() {
-        return geCenter.getY() - geRadius / 2 < 0;
+        return geCenter.getY() - geschossImage.height / 2 < 0;
     }
 }

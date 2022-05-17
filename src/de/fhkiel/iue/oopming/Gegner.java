@@ -3,42 +3,42 @@ package de.fhkiel.iue.oopming;
 import processing.core.PApplet;
 
 public class Gegner extends FlyingObject {
-    private Position gcenter;
-    private Color gcolor;
-    private int gradius = 30;
+    private Position gCenter;
+    private int gRadius = 30;
 
     public Gegner() {
-        int feld = (int) (Math.random() * ((Main.width - gradius) - gradius + 1) + gradius);
-        gcenter = new Position(feld, -(int) (Math.random() * (Main.width - gradius / 2)));
+        gCenter = new Position((int) (Math.random() * ((Main.WIDTH - gRadius) - gRadius + 1) + gRadius),
+                -(int) (Math.random() * (Main.WIDTH - gRadius / 2)));
+    }
+
+    public int getGradius() {
+        return gRadius;
+    }
+
+    public void setGradius(int gradius) {
+        this.gRadius = gradius;
+    }
+
+    public Position getgCenter() {
+        return gCenter;
+    }
+
+    public void setgCenter(Position gCenter) {
+        this.gCenter = gCenter;
     }
 
     public void draw(PApplet pApplet) {
         pApplet.fill(120);
-        pApplet.circle(gcenter.getX(), gcenter.getY(), gradius);
+        pApplet.circle(gCenter.getX(), gCenter.getY(), gRadius);
     }
 
-    public int getGradius() {
-        return gradius;
-    }
-
-    public void setGradius(int gradius) {
-        this.gradius = gradius;
-    }
-
-    public Position getGcenter() {
-        return gcenter;
-    }
-
-    public void setGcenter(Position gcenter) {
-        this.gcenter = gcenter;
-    }
 
     public void move() {
-        this.gcenter.setY(gcenter.getY() + 5);
+        this.gCenter.setY(gCenter.getY() + 5);
     }
 
     @Override
     public boolean ausserhalbSpielFeld() {
-        return gcenter.getY() + gradius / 2 > Main.height;
+        return gCenter.getY() + gRadius / 2 > Main.HEIGHT;
     }
 }
