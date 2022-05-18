@@ -47,6 +47,7 @@ public class Main extends PApplet {
         if (isInPause) {
             pauseScreen.pauseScreen(this);
         }
+
     }
     public void keyPressed() {
         if (key == 's') {
