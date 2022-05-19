@@ -1,10 +1,7 @@
 package de.fhkiel.iue.oopming;
 
 import processing.core.PApplet;
-import processing.core.PImage;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main extends PApplet {
     public static boolean isInGame = true;

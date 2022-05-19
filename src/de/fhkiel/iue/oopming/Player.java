@@ -45,12 +45,13 @@ public class Player extends FlyingObject {
         this.playerImage = playerImage;
     }
 
-    public void setup(PApplet pApplet){
+    public void setup(PApplet pApplet) {
         setpCenter(new Position(pApplet.width / 2, pApplet.height - 100));
         setPlayerImage(pApplet.loadImage("src/de/fhkiel/iue/oopming/image/Flugzeug.png"));
         setPlayerHeight(getPlayerImage().height);
         setPlayerWidth(getPlayerImage().width);
     }
+
     public void draw(PApplet pApplet) {
         pApplet.image(playerImage, pCenter.getX(), pCenter.getY());
     }
@@ -72,9 +73,11 @@ public class Player extends FlyingObject {
                     pCenter.setY(pCenter.getY() + speed);
                 }
             } else if (pCenter.getX() < getPlayerWidth() / 2) pCenter.setX(getPlayerWidth() / 2);
-            else if (pCenter.getX() > Main.width - getPlayerWidth() / 2) pCenter.setX(Main.width - getPlayerWidth() / 2);
+            else if (pCenter.getX() > Main.width - getPlayerWidth() / 2)
+                pCenter.setX(Main.width - getPlayerWidth() / 2);
             else if (pCenter.getY() < getPlayerHeight() / 2) pCenter.setY(getPlayerHeight() / 2);
-            else if (pCenter.getY() > Main.height - getPlayerHeight() / 2) pCenter.setY(Main.height - getPlayerHeight() / 2);
+            else if (pCenter.getY() > Main.height - getPlayerHeight() / 2)
+                pCenter.setY(Main.height - getPlayerHeight() / 2);
 
         }
     }

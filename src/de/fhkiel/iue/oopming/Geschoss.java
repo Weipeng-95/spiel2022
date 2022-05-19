@@ -47,8 +47,8 @@ public class Geschoss extends FlyingObject {
 
     public void setup(PApplet pApplet) {
         setGeschossImage(pApplet.loadImage("src/de/fhkiel/iue/oopming/image/Geschoss.png"));
-        setGeschossHeight(geschossImage.height);
-        setGeschossWidth(geschossImage.width);
+        setGeschossHeight(getGeschossImage().height);
+        setGeschossWidth(getGeschossImage().width);
     }
 
     public void draw(PApplet pApplet) {
@@ -61,10 +61,10 @@ public class Geschoss extends FlyingObject {
     }
 
     public boolean istErschossen(Gegner g, Geschoss ge) {
-        return (g.getGcenter().getX() - g.getGradius() / 2 < ge.getGeCenter().getX() - ge.getGeschossWidth() / 2 &&
-                g.getGcenter().getX() + g.getGradius() / 2 > ge.getGeCenter().getX() + ge.getGeschossWidth() / 2 &&
-                g.getGcenter().getY() + g.getGradius() / 2 > ge.getGeCenter().getY() + ge.getGeschossHeight() / 2 &&
-                g.getGcenter().getY() - g.getGradius() / 2 < ge.getGeCenter().getY() - ge.getGeschossHeight() / 2);
+        return (g.getGcenter().getX() - g.getGradius() / 2 < ge.getGeCenter().getX() + ge.getGeschossWidth() / 2 &&
+                g.getGcenter().getX() + g.getGradius() / 2 > ge.getGeCenter().getX() - ge.getGeschossWidth() / 2 &&
+                g.getGcenter().getY() + g.getGradius() / 2 > ge.getGeCenter().getY() - ge.getGeschossHeight() / 2 &&
+                g.getGcenter().getY() - g.getGradius() / 2 < ge.getGeCenter().getY() + ge.getGeschossHeight() / 2);
     }
 
     @Override
