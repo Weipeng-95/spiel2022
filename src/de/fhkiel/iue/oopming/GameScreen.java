@@ -23,7 +23,7 @@ public class GameScreen {
 
     public GameScreen(PApplet pApplet) {
 
-        player = new Player(pApplet);
+        player = new Player();
         gegner = new Gegner();
         gegners = new ArrayList<Gegner>();
         // Array für Geschosse
@@ -35,10 +35,9 @@ public class GameScreen {
 
         for (int i = 0; i < explosionImage.length; i++) {
             explosionImage[i] = pApplet.loadImage("src/de/fhkiel/iue/oopming/image/explosion/explosion_" + i + ".png");
-
         }
 
-        pApplet.background(5, 193, 186);
+        pApplet.background(35, 150, 150);
         //
         for (int i = 0; i < gegners.size(); i++) {
             //get Instance von Gegner
@@ -57,6 +56,7 @@ public class GameScreen {
         if (langsamer % 4 == 0) {
             Geschoss geschoss = new Geschoss((int) player.getpCenter().getX(), (int) (player.getpCenter().getY() - player.getPlayerHeight() / 2));
             geschosse.add(geschoss);
+            geschoss.setup(pApplet);
         }
 
         for (int i = 0; i < geschosse.size(); i++) {
@@ -80,8 +80,6 @@ public class GameScreen {
                     gegners.remove(gegner1);
                     geschosse.remove(geschoss);
                     gegners.add(new Gegner());
-
-
                 }
             }
         }
@@ -98,15 +96,11 @@ public class GameScreen {
                 explotion = false;
             }
         }
-
-
     }
 
     public void setup(PApplet pApplet) {
+        player.setup(pApplet);
 
-
-        player.setpCenter(new Position(pApplet.width / 2, pApplet.height - 100));
-        player.setColor(new Color(100, 100, 200));
         gegner.setGcenter(new Position(0, 0));
         pApplet.noCursor();
         pApplet.noStroke();
@@ -115,10 +109,7 @@ public class GameScreen {
         for (int i = 0; i < 8; i++) {
             gegners.add(new Gegner());
         }
-
     }
-
-
 }
 
 
