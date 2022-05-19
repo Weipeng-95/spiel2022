@@ -14,7 +14,7 @@ public class GameScreen {
 
     Position expos = new Position();
     boolean explotion = false;
-    int explosionImageFrame = 8;
+    int explosionImageFrame = 20;
     PImage[] explosionImage = new PImage[explosionImageFrame];
     Player player;
     List gegners;
@@ -74,8 +74,9 @@ public class GameScreen {
                 Geschoss geschoss = (Geschoss) geschosse.get(j);
                 if (geschoss.istErschossen(gegner1, geschoss)) {
                     explotion = true;
-                    expos.setY(gegner1.getGcenter().getY());
-                    expos.setX(gegner1.getGcenter().getX());
+                    expos = gegner1.getGcenter();
+//                    expos.setY(gegner1.getGcenter().getY());
+//                    expos.setX(gegner1.getGcenter().getX());
                     gegners.remove(gegner1);
                     geschosse.remove(geschoss);
                     gegners.add(new Gegner());
@@ -88,17 +89,15 @@ public class GameScreen {
         player.steuen(pApplet);
 
 
-
         if (explotion) {
 
-            pApplet.image(explosionImage[u],expos.getX(),expos.getY());
+            pApplet.image(explosionImage[u], expos.getX(), expos.getY());
             u++;
-            if(u==7){
-                u=0;
+            if (u == explosionImageFrame - 1) {
+                u = 0;
                 explotion = false;
             }
         }
-
 
 
     }
