@@ -13,7 +13,7 @@ public class Gegner extends FlyingObject {
     }
 
     public void draw(PApplet pApplet) {
-        pApplet.fill(120);
+        pApplet.fill(0);
         pApplet.circle(gcenter.getX(), gcenter.getY(), gradius);
     }
 

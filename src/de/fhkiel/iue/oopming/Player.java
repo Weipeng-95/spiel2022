@@ -42,10 +42,11 @@ public class Player extends FlyingObject {
     }
 
     public void draw(PApplet pApplet) {
-        pApplet.fill(this.getColor().getR(), this.getColor().getG(), this.getColor().getB());
+//        pApplet.fill(this.getColor().getR(), this.getColor().getG(), this.getColor().getB());
 //        pApplet.circle(pCenter.getX(), pCenter.getY(), radius);
         playerImage = pApplet.loadImage("src/de/fhkiel/iue/oopming/image/Flugzeug.png");
         pApplet.image(playerImage, pCenter.getX(), pCenter.getY());
+        setPlayerHeight(playerImage.height);
     }
 
     public void steuen(PApplet pApplet) {

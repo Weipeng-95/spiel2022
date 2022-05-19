@@ -38,7 +38,7 @@ public class GameScreen {
 
         }
 
-        pApplet.background(0);
+        pApplet.background(5, 193, 186);
         //
         for (int i = 0; i < gegners.size(); i++) {
             //get Instance von Gegner
@@ -55,7 +55,7 @@ public class GameScreen {
 // lasst Geschoss nach bestimmter Zeit erzeugen
         langsamer++;
         if (langsamer % 4 == 0) {
-            Geschoss geschoss = new Geschoss((int) player.getpCenter().getX(), (int) player.getpCenter().getY());
+            Geschoss geschoss = new Geschoss((int) player.getpCenter().getX(), (int) (player.getpCenter().getY() - player.getPlayerHeight() / 2));
             geschosse.add(geschoss);
         }
 
