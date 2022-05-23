@@ -12,10 +12,6 @@ public class Player extends FlyingObject {
     private int speed = 6;
     private int radius = 80;
 
-    public Player(PApplet pApplet) {
-//        pCenter = new Position (Main.width / 2,Main.height - 100);
-
-    }
 
     public Position getpCenter() {
         return pCenter;
@@ -41,19 +37,32 @@ public class Player extends FlyingObject {
         this.playerHeight = playerHeight;
     }
 
+    public PImage getPlayerImage() {
+        return playerImage;
+    }
+
+    public void setPlayerImage(PImage playerImage) {
+        this.playerImage = playerImage;
+    }
+
+    public void setup(PApplet pApplet) {
+        setpCenter(new Position(pApplet.width / 2, pApplet.height - 100));
+        setPlayerImage(pApplet.loadImage("src/de/fhkiel/iue/oopming/image/Flugzeug.png"));
+        setPlayerHeight(getPlayerImage().height);
+        setPlayerWidth(getPlayerImage().width);
+    }
+
     public void draw(PApplet pApplet) {
-        pApplet.fill(this.getColor().getR(), this.getColor().getG(), this.getColor().getB());
-//        pApplet.circle(pCenter.getX(), pCenter.getY(), radius);
-        playerImage = pApplet.loadImage("src/de/fhkiel/iue/oopming/image/Flugzeug.png");
         pApplet.image(playerImage, pCenter.getX(), pCenter.getY());
     }
 
+
     public void steuen(PApplet pApplet) {
         if (pApplet.keyPressed) {
-            if (pCenter.getX() >= playerImage.width / 2
-                    && pCenter.getX() <= Main.width - playerImage.width / 2
-                    && pCenter.getY() >= playerImage.height / 2
-                    && pCenter.getY() <= Main.height - playerImage.height / 2) {
+            if (pCenter.getX() >= getPlayerWidth() / 2
+                    && pCenter.getX() <= Main.width - getPlayerWidth() / 2
+                    && pCenter.getY() >= getPlayerHeight() / 2
+                    && pCenter.getY() <= Main.height - getPlayerHeight() / 2) {
                 if (pApplet.keyCode == pApplet.RIGHT) {
                     pCenter.setX(pCenter.getX() + speed);
                 } else if (pApplet.keyCode == pApplet.LEFT) {
@@ -63,10 +72,12 @@ public class Player extends FlyingObject {
                 } else if (pApplet.keyCode == pApplet.DOWN) {
                     pCenter.setY(pCenter.getY() + speed);
                 }
-            } else if (pCenter.getX() < playerImage.width / 2) pCenter.setX(playerImage.width / 2);
-            else if (pCenter.getX() > Main.width - playerImage.width / 2) pCenter.setX(Main.width - playerImage.width / 2);
-            else if (pCenter.getY() < playerImage.height / 2) pCenter.setY(playerImage.height / 2);
-            else if (pCenter.getY() > Main.height - playerImage.height / 2) pCenter.setY(Main.height - playerImage.height / 2);
+            } else if (pCenter.getX() < getPlayerWidth() / 2) pCenter.setX(getPlayerWidth() / 2);
+            else if (pCenter.getX() > Main.width - getPlayerWidth() / 2)
+                pCenter.setX(Main.width - getPlayerWidth() / 2);
+            else if (pCenter.getY() < getPlayerHeight() / 2) pCenter.setY(getPlayerHeight() / 2);
+            else if (pCenter.getY() > Main.height - getPlayerHeight() / 2)
+                pCenter.setY(Main.height - getPlayerHeight() / 2);
 
         }
     }

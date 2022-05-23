@@ -1,16 +1,13 @@
 package de.fhkiel.iue.oopming;
 
 import processing.core.PApplet;
-import processing.core.PImage;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main extends PApplet {
     public static boolean isInGame = true;
     public static boolean isInPause;
 
-     public GameScreen gameScreen = new GameScreen(this);
+    public GameScreen gameScreen = new GameScreen(this);
     public PauseScreen pauseScreen = new PauseScreen(this);
 
 
@@ -18,15 +15,11 @@ public class Main extends PApplet {
     static int height = 800;
 
 
-
-
-
     public static void main(String[] args) {
         PApplet.main("de.fhkiel.iue.oopming.Main");
     }
 
     public void setup() {
-
         gameScreen.setup(this);
     }
 
@@ -47,7 +40,9 @@ public class Main extends PApplet {
         if (isInPause) {
             pauseScreen.pauseScreen(this);
         }
+
     }
+
     public void keyPressed() {
         if (key == 's') {
             isInGame = true;
