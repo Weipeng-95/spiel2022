@@ -30,14 +30,13 @@ public class GameScreen {
         geschosse = new ArrayList<Geschoss>();
     }
 
-
     public void gameScreen(PApplet pApplet) {
 
         for (int i = 0; i < explosionImage.length; i++) {
             explosionImage[i] = pApplet.loadImage("src/de/fhkiel/iue/oopming/image/explosion/explosion_" + i + ".png");
         }
 
-        pApplet.background(35, 150, 150);
+        pApplet.background(0);
         //
         for (int i = 0; i < gegners.size(); i++) {
             //get Instance von Gegner
