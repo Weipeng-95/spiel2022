@@ -1,5 +1,9 @@
-package de.fhkiel.iue.oopming;
+package de.fhkiel.iue.oopming.screen;
 
+import de.fhkiel.iue.oopming.character.Gegner;
+import de.fhkiel.iue.oopming.character.Geschoss;
+import de.fhkiel.iue.oopming.character.Player;
+import de.fhkiel.iue.oopming.basic.Position;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -33,7 +37,7 @@ public class GameScreen {
     public void gameScreen(PApplet pApplet) {
 
         for (int i = 0; i < explosionImage.length; i++) {
-            explosionImage[i] = pApplet.loadImage("src/de/fhkiel/iue/oopming/image/explosion/explosion_" + i + ".png");
+            explosionImage[i] = pApplet.loadImage("de/fhkiel/iue/oopming/images/explosion/explosion_" + i + ".png");
         }
 
         pApplet.background(0);
@@ -53,7 +57,7 @@ public class GameScreen {
 // lasst Geschoss nach bestimmter Zeit erzeugen
         langsamer++;
         if (langsamer % 4 == 0) {
-            Geschoss geschoss = new Geschoss((int) player.getpCenter().getX(), (int) (player.getpCenter().getY() - player.getPlayerHeight() / 2));
+            Geschoss geschoss = new Geschoss((int) player.getCenter().getX(), (int) (player.getCenter().getY() - player.getImage().height / 2));
             geschosse.add(geschoss);
             geschoss.setup(pApplet);
         }
@@ -73,7 +77,7 @@ public class GameScreen {
                 Geschoss geschoss = (Geschoss) geschosse.get(j);
                 if (geschoss.istErschossen(gegner1, geschoss)) {
                     explotion = true;
-                    expos = gegner1.getGcenter();
+                    expos = gegner1.getCenter();
 //                    expos.setY(gegner1.getGcenter().getY());
 //                    expos.setX(gegner1.getGcenter().getX());
                     gegners.remove(gegner1);
@@ -100,7 +104,7 @@ public class GameScreen {
     public void setup(PApplet pApplet) {
         player.setup(pApplet);
 
-        gegner.setGcenter(new Position(0, 0));
+        gegner.setCenter(new Position(0,0));
         pApplet.noCursor();
         pApplet.noStroke();
         pApplet.imageMode(pApplet.CENTER);

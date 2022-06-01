@@ -1,10 +1,9 @@
-package de.fhkiel.iue.oopming;
+package de.fhkiel.iue.oopming.screen;
 
 import processing.core.PApplet;
 
 public class PauseScreen {
     public PauseScreen(PApplet pApplet) {
-
     }
 
     public void pauseScreen(PApplet pApplet) {
