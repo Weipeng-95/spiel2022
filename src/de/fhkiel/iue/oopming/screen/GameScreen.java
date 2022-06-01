@@ -1,5 +1,6 @@
 package de.fhkiel.iue.oopming.screen;
 
+import de.fhkiel.iue.oopming.Main;
 import de.fhkiel.iue.oopming.character.Gegner;
 import de.fhkiel.iue.oopming.character.Geschoss;
 import de.fhkiel.iue.oopming.character.Player;
@@ -10,101 +11,29 @@ import processing.core.PImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameScreen {
-
-
-    Gegner gegner;
-    int langsamer;
-
-    Position expos = new Position();
-    boolean explotion = false;
-    int explosionImageFrame = 20;
-    PImage[] explosionImage = new PImage[explosionImageFrame];
+public class GameScreen extends Screen {
+    //    Gegner gegner;
+    int geschossIntervall;
     Player player;
     List gegners;
     List geschosse;
-    int u = 0;
 
-    public GameScreen(PApplet pApplet) {
+    int imageMoveSpeed;
 
+    int refreshIndex = 0;
+    Position expos = new Position();
+    boolean explotion = false;
+    int explosionImageFrame = 12;
+    PImage[] explosionImage = new PImage[explosionImageFrame];
+
+    public GameScreen() {
         player = new Player();
-        gegner = new Gegner();
         gegners = new ArrayList<Gegner>();
-        // Array für Geschosse
         geschosse = new ArrayList<Geschoss>();
     }
 
-    public void gameScreen(PApplet pApplet) {
-
-        for (int i = 0; i < explosionImage.length; i++) {
-            explosionImage[i] = pApplet.loadImage("de/fhkiel/iue/oopming/images/explosion/explosion_" + i + ".png");
-        }
-
-        pApplet.background(0);
-        //
-        for (int i = 0; i < gegners.size(); i++) {
-            //get Instance von Gegner
-            gegner = (Gegner) gegners.get(i);
-            gegner.draw(pApplet);
-            gegner.move();
-            if (gegner.ausserhalbSpielFeld()) {
-                //Wenn Gegner außerhalber dem Spielfeld, löscht der Gegner
-                gegners.remove(gegner);
-                //ein neuer Gegner herstellen
-                gegners.add(new Gegner());
-            }
-        }
-// lasst Geschoss nach bestimmter Zeit erzeugen
-        langsamer++;
-        if (langsamer % 4 == 0) {
-            Geschoss geschoss = new Geschoss((int) player.getCenter().getX(), (int) (player.getCenter().getY() - player.getImage().height / 2));
-            geschosse.add(geschoss);
-            geschoss.setup(pApplet);
-        }
-
-        for (int i = 0; i < geschosse.size(); i++) {
-            Geschoss tempGeschoss = (Geschoss) geschosse.get(i);
-            tempGeschoss.draw(pApplet);
-            tempGeschoss.move();
-            if (tempGeschoss.ausserhalbSpielFeld()) {
-                geschosse.remove(tempGeschoss);
-            }
-        }
-
-        for (int i = 0; i < gegners.size(); i++) {
-            Gegner gegner1 = (Gegner) gegners.get(i);
-            for (int j = 0; j < geschosse.size(); j++) {
-                Geschoss geschoss = (Geschoss) geschosse.get(j);
-                if (geschoss.istErschossen(gegner1, geschoss)) {
-                    explotion = true;
-                    expos = gegner1.getCenter();
-//                    expos.setY(gegner1.getGcenter().getY());
-//                    expos.setX(gegner1.getGcenter().getX());
-                    gegners.remove(gegner1);
-                    geschosse.remove(geschoss);
-                    gegners.add(new Gegner());
-                }
-            }
-        }
-        player.draw(pApplet);
-        player.steuen(pApplet);
-
-
-        if (explotion) {
-
-            pApplet.image(explosionImage[u], expos.getX(), expos.getY());
-            u++;
-            if (u == explosionImageFrame - 1) {
-                u = 0;
-                explotion = false;
-            }
-        }
-    }
-
     public void setup(PApplet pApplet) {
-        player.setup(pApplet);
-
-        gegner.setCenter(new Position(0,0));
+        player.setupCharacter(pApplet);
         pApplet.noCursor();
         pApplet.noStroke();
         pApplet.imageMode(pApplet.CENTER);
@@ -112,7 +41,84 @@ public class GameScreen {
         for (int i = 0; i < 8; i++) {
             gegners.add(new Gegner());
         }
+        this.setImage(pApplet.loadImage("de/fhkiel/iue/oopming/images/hintergrundbild.png"));
+
     }
+
+    @Override
+    public void schowScreen(PApplet pApplet) {
+
+        imageMoveSpeed = Main.TIMER / 10;
+        for (int i = -imageMoveSpeed; i < Main.HEIGHT; i += getImage().height) {
+            pApplet.copy(getImage(), 0, 0, getImage().width, Main.HEIGHT,
+                    0, -i, getImage().width, Main.HEIGHT);
+        }
+
+        player.drawCharacter(pApplet);
+        player.steuen(pApplet);
+
+        gegnerGenerator(pApplet);
+
+// lasst Geschoss nach bestimmter Zeit erzeugen
+        geschossIntervall++;
+        if (geschossIntervall % 4 == 0) {
+            Geschoss geschoss = new Geschoss(player.getCenter().getX(),
+                    player.getCenter().getY() - player.getImage().height / 2);
+
+            geschosse.add(geschoss);
+            geschoss.setupCharacter(pApplet);
+        }
+
+        for (int i = 0; i < geschosse.size(); i++) {
+            Geschoss tempGeschoss = (Geschoss) geschosse.get(i);
+            tempGeschoss.drawCharacter(pApplet);
+            tempGeschoss.move();
+            if (tempGeschoss.ausserhalbSpielFeld()) {
+                geschosse.remove(tempGeschoss);
+            }
+        }
+
+
+        for (int i = 0; i < explosionImage.length; i++) {
+            explosionImage[i] = pApplet.loadImage("de/fhkiel/iue/oopming/images/explosion1/explosion_" + i + ".png");
+        }
+
+        if (explotion) {
+            pApplet.image(explosionImage[refreshIndex], expos.getX(), expos.getY());
+            refreshIndex++;
+            if (refreshIndex == explosionImageFrame - 1) {
+                refreshIndex = 0;
+                explotion = false;
+            }
+        }
+    }
+
+    private void gegnerGenerator(PApplet pApplet) {
+        for (int i = 0; i < gegners.size(); i++) {
+            //get Instance von Gegner
+            Gegner gegnerTemp = (Gegner) gegners.get(i);
+            gegnerTemp.drawCharacter(pApplet);
+            gegnerTemp.move();
+
+            if (gegnerTemp.ausserhalbSpielFeld()) {
+                gegners.remove(gegnerTemp); // Wenn Gegner außerhalber dem Spielfeld, löscht der Gegner
+                gegners.add(new Gegner()); // ein neuer Gegner herstellen
+            }
+
+            for (int j = 0; j < geschosse.size(); j++) {
+                Geschoss geschoss = (Geschoss) geschosse.get(j);
+                if (geschoss.istErschossen(gegnerTemp, geschoss)) {
+                    gegners.remove(gegnerTemp);
+                    geschosse.remove(geschoss);
+                    gegners.add(new Gegner());
+
+                    explotion = true;
+                    expos = gegnerTemp.getCenter();
+                }
+            }
+        }
+    }
+
 }
 
 

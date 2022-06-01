@@ -9,21 +9,22 @@ import processing.core.PApplet;
 public class Main extends PApplet {
     public static int WIDTH = 500;
     public static int HEIGHT = 800;
+    public static int TIMER;
 
-    public static boolean isInGame;
+    public static boolean isInGame = true;
     public static boolean isInPause;
     public static boolean isInStart;
 
-    public GameScreen gameScreen = new GameScreen(this);
-    public PauseScreen pauseScreen = new PauseScreen(this);
-    public StartScreen startScreen = new StartScreen(this);
+    GameScreen gameScreen = new GameScreen();
+    PauseScreen pauseScreen = new PauseScreen();
+    StartScreen startScreen = new StartScreen();
 
     public static void main(String[] args) {
         PApplet.main("de.fhkiel.iue.oopming.Main");
     }
 
     public void setup() {
-        isInStart = true;
+        isInStart = false;
         gameScreen.setup(this);
     }
 
@@ -31,22 +32,21 @@ public class Main extends PApplet {
     public void settings() {
         // Spielfeld
         size(500, 800);
-
-//        geschoss.setGeCenter(new Position(0,0));
     }
 
     @Override
     public void draw() {
+        TIMER = millis();
+
         if (isInStart) {
-            startScreen.startScreen(this);
+            startScreen.schowScreen(this);
         }
         if (isInGame) {
-            gameScreen.gameScreen(this);
+            gameScreen.schowScreen(this);
         }
         if (isInPause) {
-            pauseScreen.pauseScreen(this);
+            pauseScreen.schowScreen(this);
         }
-
     }
 
     public void keyPressed() {

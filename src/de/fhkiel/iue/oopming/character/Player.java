@@ -6,20 +6,16 @@ import de.fhkiel.iue.oopming.basic.Position;
 import processing.core.PApplet;
 
 public class Player extends FlyingObject {
-
-    private int leben = 3;
     private int speed = 6;
-    private int radius = 80;
 
     public Player() {
-    }
-
-    public void setup(PApplet pApplet) {
         setCenter(new Position(Main.WIDTH / 2, Main.HEIGHT - 100));
-        setImage(pApplet.loadImage("de/fhkiel/iue/oopming/images/Flugzeug.png"));
     }
 
-    public void draw(PApplet pApplet) {
+    @Override
+    public void drawCharacter(PApplet pApplet) {
+        if(Main.TIMER % 2 == 0) setImage(pApplet.loadImage("de/fhkiel/iue/oopming/images/Flugzeug-0.png"));
+        else if (Main.TIMER % 2 == 1) setImage(pApplet.loadImage("de/fhkiel/iue/oopming/images/Flugzeug-1.png"));
         pApplet.image(getImage(), getCenter().getX(), getCenter().getY());
     }
 
@@ -49,6 +45,9 @@ public class Player extends FlyingObject {
         }
     }
 
+    @Override
+    public void setupCharacter(PApplet pApplet) {
+    }
 
     @Override
     public boolean ausserhalbSpielFeld() {
