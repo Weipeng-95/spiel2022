@@ -1,18 +1,19 @@
 package de.fhkiel.iue.oopming;
 
+import de.fhkiel.iue.oopming.screen.GameScreen;
+import de.fhkiel.iue.oopming.screen.PauseScreen;
 import processing.core.PApplet;
 
 
 public class Main extends PApplet {
+    public static int WIDTH = 500;
+    public static int HEIGHT = 800;
+
     public static boolean isInGame = true;
     public static boolean isInPause;
 
     public GameScreen gameScreen = new GameScreen(this);
     public PauseScreen pauseScreen = new PauseScreen(this);
-
-
-    static int width = 500;
-    static int height = 800;
 
 
     public static void main(String[] args) {

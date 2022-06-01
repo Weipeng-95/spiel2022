@@ -1,4 +1,4 @@
-package de.fhkiel.iue.oopming;
+package de.fhkiel.iue.oopming.basic;
 
 public class Position {
     private float x;
