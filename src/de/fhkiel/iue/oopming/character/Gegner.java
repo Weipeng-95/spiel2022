@@ -7,11 +7,11 @@ import processing.core.PApplet;
 
 public class Gegner extends FlyingObject {
 
-    private int gradius = 30;
+    private float gradius = 30;
 
     public Gegner() {
-        int x = (int) (Math.random() * ((Main.WIDTH - gradius) - gradius + 1) + gradius);
-        int y = -(int) (Math.random() * (Main.WIDTH - gradius / 2));
+        float x = (float) (Math.random() * ((Main.WIDTH - gradius) - gradius + 1) + gradius);
+        float y = -(float) (Math.random() * (Main.WIDTH - gradius / 2));
         this.setCenter(new Position(x, y));
     }
 
@@ -20,7 +20,7 @@ public class Gegner extends FlyingObject {
         pApplet.circle(getCenter().getX(), getCenter().getY(), gradius);
     }
 
-    public int getGradius() {
+    public float getGradius() {
         return gradius;
     }
 
