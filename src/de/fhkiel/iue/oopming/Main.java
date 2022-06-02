@@ -11,21 +11,23 @@ public class Main extends PApplet {
     public static int HEIGHT = 800;
     public static int TIMER;
 
-    public static boolean isInGame = true;
+    public static boolean isInGame;
     public static boolean isInPause;
     public static boolean isInStart;
 
     GameScreen gameScreen = new GameScreen();
     PauseScreen pauseScreen = new PauseScreen();
-    StartScreen startScreen = new StartScreen();
+    StartScreen startScreen = new StartScreen(this);
 
     public static void main(String[] args) {
         PApplet.main("de.fhkiel.iue.oopming.Main");
     }
 
     public void setup() {
-        isInStart = false;
+        isInStart = true;
         gameScreen.setup(this);
+        startScreen.setImage(loadImage("de/fhkiel/iue/oopming/images/hintergrundbild.png"));
+        pauseScreen.setImage(loadImage("de/fhkiel/iue/oopming/images/hintergrundbild.png"));
     }
 
     @Override

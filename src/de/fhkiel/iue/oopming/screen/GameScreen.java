@@ -12,18 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameScreen extends Screen {
-    //    Gegner gegner;
-    int geschossIntervall;
+
     Player player;
     List gegners;
     List geschosse;
 
-    int imageMoveSpeed;
+    private int geschossIntervall;
+    private int imageMoveSpeed;
 
-    int refreshIndex = 0;
+    private int refreshIndex = 0;
     Position expos = new Position();
-    boolean explotion = false;
-    int explosionImageFrame = 12;
+    private boolean isExplotion = false;
+    private int explosionImageFrame = 12;
     PImage[] explosionImage = new PImage[explosionImageFrame];
 
     public GameScreen() {
@@ -48,18 +48,38 @@ public class GameScreen extends Screen {
     @Override
     public void schowScreen(PApplet pApplet) {
 
-        imageMoveSpeed = Main.TIMER / 10;
-        for (int i = -imageMoveSpeed; i < Main.HEIGHT; i += getImage().height) {
-            pApplet.copy(getImage(), 0, 0, getImage().width, Main.HEIGHT,
-                    0, -i, getImage().width, Main.HEIGHT);
-        }
+        hintergrund(pApplet);
 
         player.drawCharacter(pApplet);
         player.steuen(pApplet);
 
         gegnerGenerator(pApplet);
 
-// lasst Geschoss nach bestimmter Zeit erzeugen
+        geschossGenerator(pApplet);
+
+        if (isExplotion) {
+            for (int k = 0; k < explosionImage.length; k++) {
+                explosionImage[k] = pApplet.loadImage("de/fhkiel/iue/oopming/images/explosion1/explosion_" + k + ".png");
+            }
+            pApplet.image(explosionImage[refreshIndex], expos.getX(), expos.getY());
+            refreshIndex++;
+            if (refreshIndex == explosionImageFrame - 1) {
+                refreshIndex = 0;
+                isExplotion = false;
+            }
+        }
+    }
+
+    private void hintergrund(PApplet pApplet) {
+        imageMoveSpeed = Main.TIMER / 10;
+        for (int i = -imageMoveSpeed; i < Main.HEIGHT; i += getImage().height) {
+            pApplet.copy(getImage(), 0, 0, getImage().width, Main.HEIGHT,
+                    0, -i, getImage().width, Main.HEIGHT);
+        }
+    }
+
+    private void geschossGenerator(PApplet pApplet) {
+        // lasst Geschoss nach bestimmter Zeit erzeugen
         geschossIntervall++;
         if (geschossIntervall % 4 == 0) {
             Geschoss geschoss = new Geschoss(player.getCenter().getX(),
@@ -75,20 +95,6 @@ public class GameScreen extends Screen {
             tempGeschoss.move();
             if (tempGeschoss.ausserhalbSpielFeld()) {
                 geschosse.remove(tempGeschoss);
-            }
-        }
-
-
-        for (int i = 0; i < explosionImage.length; i++) {
-            explosionImage[i] = pApplet.loadImage("de/fhkiel/iue/oopming/images/explosion1/explosion_" + i + ".png");
-        }
-
-        if (explotion) {
-            pApplet.image(explosionImage[refreshIndex], expos.getX(), expos.getY());
-            refreshIndex++;
-            if (refreshIndex == explosionImageFrame - 1) {
-                refreshIndex = 0;
-                explotion = false;
             }
         }
     }
@@ -112,10 +118,13 @@ public class GameScreen extends Screen {
                     geschosse.remove(geschoss);
                     gegners.add(new Gegner());
 
-                    explotion = true;
+                    isExplotion = true;
                     expos = gegnerTemp.getCenter();
+
                 }
+
             }
+
         }
     }
 
