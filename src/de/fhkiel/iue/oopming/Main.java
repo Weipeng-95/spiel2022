@@ -47,7 +47,7 @@ public class Main extends PApplet {
         }
         if (isInGame) {
             gameScreen.showScreen(this);
-            gameScreen.playerInput(this);
+
         }
         if (isInPause) {
             pauseScreen.showScreen(this);
