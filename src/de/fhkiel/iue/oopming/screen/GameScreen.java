@@ -7,6 +7,7 @@ import de.fhkiel.iue.oopming.character.Player;
 import de.fhkiel.iue.oopming.basic.Position;
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.data.IntList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,11 @@ public class GameScreen extends Screen {
     Player player;
     List gegners;
     List geschosse;
-
+    IntList pKeys = new IntList();
     private int geschossIntervall;
     private int imageMoveSpeed;
 
+    private boolean right, left, up, down, schiessen;
     private int refreshIndex = 0;
     Position expos = new Position();
     private boolean isExplotion = false;
@@ -51,7 +53,7 @@ public class GameScreen extends Screen {
         hintergrund(pApplet);
 
         player.drawCharacter(pApplet);
-        player.steuen(pApplet);
+        player.flightRange();
 
         gegnerGenerator(pApplet);
 
@@ -70,6 +72,7 @@ public class GameScreen extends Screen {
         }
     }
 
+
     private void hintergrund(PApplet pApplet) {
         imageMoveSpeed = Main.TIMER / 10;
         for (int i = -imageMoveSpeed; i < Main.HEIGHT; i += getImage().height) {
@@ -81,13 +84,13 @@ public class GameScreen extends Screen {
     private void geschossGenerator(PApplet pApplet) {
         // lasst Geschoss nach bestimmter Zeit erzeugen
         geschossIntervall++;
-        if (geschossIntervall % 4 == 0) {
-            Geschoss geschoss = new Geschoss(player.getCenter().getX(),
-                    player.getCenter().getY() - player.getImage().height / 2);
-
-            geschosse.add(geschoss);
-            geschoss.setupCharacter(pApplet);
-        }
+//        if (geschossIntervall % 4 == 0) {
+//            Geschoss geschoss = new Geschoss(player.getCenter().getX(),
+//                    player.getCenter().getY() - player.getImage().height / 2);
+//
+//            geschosse.add(geschoss);
+//            geschoss.setupCharacter(pApplet);
+//        }
 
         for (int i = 0; i < geschosse.size(); i++) {
             Geschoss tempGeschoss = (Geschoss) geschosse.get(i);
@@ -128,6 +131,39 @@ public class GameScreen extends Screen {
         }
     }
 
+    public void playerInput(PApplet pApplet) {
+
+            if (right) {
+                player.getCenter().setX(player.getCenter().getX() + player.getSpeed());
+            }
+            if (left) {
+                player.getCenter().setX(player.getCenter().getX() - player.getSpeed());
+            }
+            if (up) {
+                player.getCenter().setY(player.getCenter().getY() - player.getSpeed());
+            }
+            if (down) {
+                player.getCenter().setY(player.getCenter().getY() + player.getSpeed());
+            }
+            if (schiessen) {
+                if (geschossIntervall % 4 == 0) {
+                    Geschoss geschoss = new Geschoss(player.getCenter().getX(), player.getCenter().getY() - player.getImage().height / 2);
+                    geschosse.add(geschoss);
+                    geschoss.setupCharacter(pApplet);
+                }
+
+        }
+
+
+    }
+
+    public void playerInputControl(PApplet pApplet) {
+        if (pApplet.keyCode == pApplet.RIGHT) right = !right;
+        if (pApplet.keyCode == pApplet.LEFT) left = !left;
+        if (pApplet.keyCode == pApplet.UP) up = !up;
+        if (pApplet.keyCode == pApplet.DOWN) down = !down;
+        if (pApplet.key == 'z') schiessen = !schiessen;
+    }
 }
 
 
