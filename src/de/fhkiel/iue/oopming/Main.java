@@ -4,16 +4,18 @@ import de.fhkiel.iue.oopming.screen.GameScreen;
 import de.fhkiel.iue.oopming.screen.PauseScreen;
 import de.fhkiel.iue.oopming.screen.StartScreen;
 import processing.core.PApplet;
+import processing.data.IntList;
 
 
 public class Main extends PApplet {
     public static int WIDTH = 500;
     public static int HEIGHT = 800;
     public static int TIMER;
-
+    IntList pKeys = new IntList();
     public static boolean isInGame;
     public static boolean isInPause;
     public static boolean isInStart;
+
 
     GameScreen gameScreen = new GameScreen();
     PauseScreen pauseScreen = new PauseScreen();
@@ -33,7 +35,7 @@ public class Main extends PApplet {
     @Override
     public void settings() {
         // Spielfeld
-        size(500, 800);
+        size(WIDTH, HEIGHT);
     }
 
     @Override
@@ -45,13 +47,18 @@ public class Main extends PApplet {
         }
         if (isInGame) {
             gameScreen.showScreen(this);
+
         }
         if (isInPause) {
             pauseScreen.showScreen(this);
         }
+
     }
 
+
     public void keyPressed() {
+        gameScreen.playerInputControl(this, true);
+
         if (key == 's') {
             isInGame = true;
             isInPause = false;
@@ -61,6 +68,11 @@ public class Main extends PApplet {
             isInGame = false;
         }
     }
+
+    public void keyReleased() {
+        gameScreen.playerInputControl(this, false);
+    }
+
 }
 
 
