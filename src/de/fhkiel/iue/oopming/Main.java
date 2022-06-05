@@ -35,7 +35,7 @@ public class Main extends PApplet {
     @Override
     public void settings() {
         // Spielfeld
-        size(500, 800);
+        size(WIDTH, HEIGHT);
     }
 
     @Override
@@ -43,21 +43,21 @@ public class Main extends PApplet {
         TIMER = millis();
 
         if (isInStart) {
-            startScreen.schowScreen(this);
+            startScreen.showScreen(this);
         }
         if (isInGame) {
-            gameScreen.schowScreen(this);
+            gameScreen.showScreen(this);
             gameScreen.playerInput(this);
         }
         if (isInPause) {
-            pauseScreen.schowScreen(this);
+            pauseScreen.showScreen(this);
         }
 
     }
 
 
     public void keyPressed() {
-        gameScreen.playerInputControl(this);
+        gameScreen.playerInputControl(this, true);
 
         if (key == 's') {
             isInGame = true;
@@ -70,7 +70,7 @@ public class Main extends PApplet {
     }
 
     public void keyReleased() {
-        gameScreen.playerInputControl(this);
+        gameScreen.playerInputControl(this, false);
     }
 
 }

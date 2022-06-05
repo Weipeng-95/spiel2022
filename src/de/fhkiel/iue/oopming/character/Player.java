@@ -28,24 +28,20 @@ public class Player extends FlyingObject {
     }
 
 
-    public void flightRange() {
+    public boolean isInRange() {
 
-//        return getCenter().getX() >= getImage().width / 2
-//                && getCenter().getX() <= Main.WIDTH - getImage().width / 2
-//                && getCenter().getY() >= getImage().height / 2
-//                && getCenter().getY() <= Main.HEIGHT - getImage().height / 2;
-        if (getCenter().getX() < getImage().width / 2)
-            getCenter().setX(getImage().width / 2);
-        if (getCenter().getX() > Main.WIDTH - getImage().width / 2)
-            getCenter().setX(Main.WIDTH - getImage().width / 2);
-        if (getCenter().getY() < getImage().height / 2)
-            getCenter().setY(getImage().height / 2);
-        if (getCenter().getY() > Main.HEIGHT - getImage().height / 2)
-            getCenter().setY(Main.HEIGHT - getImage().height / 2);
-    }
-
-    public void schiessen() {
-
+        return getCenter().getX() >= getImage().width / 2
+                && getCenter().getX() <= Main.WIDTH - getImage().width / 2
+                && getCenter().getY() >= getImage().height / 2
+                && getCenter().getY() <= Main.HEIGHT - getImage().height / 2;
+//        if (getCenter().getX() < getImage().width / 2)
+//            getCenter().setX(getImage().width / 2);
+//        if (getCenter().getX() > Main.WIDTH - getImage().width / 2)
+//            getCenter().setX(Main.WIDTH - getImage().width / 2);
+//        if (getCenter().getY() < getImage().height / 2)
+//            getCenter().setY(getImage().height / 2);
+//        if (getCenter().getY() > Main.HEIGHT - getImage().height / 2)
+//            getCenter().setY(Main.HEIGHT - getImage().height / 2);
     }
 
     @Override

@@ -48,16 +48,26 @@ public class GameScreen extends Screen {
     }
 
     @Override
-    public void schowScreen(PApplet pApplet) {
+    public void showScreen(PApplet pApplet) {
 
         hintergrund(pApplet);
 
         player.drawCharacter(pApplet);
-        player.flightRange();
 
         gegnerGenerator(pApplet);
 
         geschossGenerator(pApplet);
+
+        if (!player.isInRange()) {
+            if (player.getCenter().getX() <= player.getImage().width / 2)
+                player.getCenter().setX(player.getImage().width / 2);
+            if (player.getCenter().getX() >= Main.WIDTH - player.getImage().width / 2)
+                player.getCenter().setX(Main.WIDTH - player.getImage().width / 2);
+            if (player.getCenter().getY() <= player.getImage().height / 2)
+                player.getCenter().setY(player.getImage().height / 2);
+            if (player.getCenter().getY() >= Main.HEIGHT - player.getImage().height / 2)
+                player.getCenter().setY(Main.HEIGHT - player.getImage().height / 2);
+        }
 
         if (isExplotion) {
             for (int k = 0; k < explosionImage.length; k++) {
@@ -133,37 +143,46 @@ public class GameScreen extends Screen {
 
     public void playerInput(PApplet pApplet) {
 
-            if (right) {
-                player.getCenter().setX(player.getCenter().getX() + player.getSpeed());
+        if (right) {
+            player.getCenter().setX(player.getCenter().getX() + player.getSpeed());
+        }
+        if (left) {
+            player.getCenter().setX(player.getCenter().getX() - player.getSpeed());
+        }
+        if (up) {
+            player.getCenter().setY(player.getCenter().getY() - player.getSpeed());
+        }
+        if (down) {
+            player.getCenter().setY(player.getCenter().getY() + player.getSpeed());
+        }
+        if (schiessen) {
+            if (geschossIntervall % 4 == 0) {
+                Geschoss geschoss = new Geschoss(player.getCenter().getX(), player.getCenter().getY() - player.getImage().height / 2);
+                geschosse.add(geschoss);
+                geschoss.setupCharacter(pApplet);
             }
-            if (left) {
-                player.getCenter().setX(player.getCenter().getX() - player.getSpeed());
-            }
-            if (up) {
-                player.getCenter().setY(player.getCenter().getY() - player.getSpeed());
-            }
-            if (down) {
-                player.getCenter().setY(player.getCenter().getY() + player.getSpeed());
-            }
-            if (schiessen) {
-                if (geschossIntervall % 4 == 0) {
-                    Geschoss geschoss = new Geschoss(player.getCenter().getX(), player.getCenter().getY() - player.getImage().height / 2);
-                    geschosse.add(geschoss);
-                    geschoss.setupCharacter(pApplet);
-                }
+
 
         }
 
-
     }
 
-    public void playerInputControl(PApplet pApplet) {
-        if (pApplet.keyCode == pApplet.RIGHT) right = !right;
-        if (pApplet.keyCode == pApplet.LEFT) left = !left;
-        if (pApplet.keyCode == pApplet.UP) up = !up;
-        if (pApplet.keyCode == pApplet.DOWN) down = !down;
-        if (pApplet.key == 'z') schiessen = !schiessen;
+    //    public void playerInputControl(PApplet pApplet) {
+//        if (pApplet.keyCode == pApplet.RIGHT) right = !right;
+//        if (pApplet.keyCode == pApplet.LEFT) left = !left;
+//        if (pApplet.keyCode == pApplet.UP) up = !up;
+//        if (pApplet.keyCode == pApplet.DOWN) down = !down;
+//        if (pApplet.key == 'z') schiessen = !schiessen;
+//    }
+    public void playerInputControl(PApplet pApplet, boolean x) {
+        if (pApplet.keyCode == pApplet.RIGHT) right = x;
+        if (pApplet.keyCode == pApplet.LEFT) left = x;
+        if (pApplet.keyCode == pApplet.UP) up = x;
+        if (pApplet.keyCode == pApplet.DOWN) down = x;
+        if (pApplet.key == 'z') schiessen = x;
     }
+
+
 }
 
 
