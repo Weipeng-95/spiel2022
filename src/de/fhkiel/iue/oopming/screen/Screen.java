@@ -24,5 +24,5 @@ abstract public class Screen {
         this.center = center;
     }
 
-    abstract public void schowScreen(PApplet pApplet);
+    abstract public void showScreen(PApplet pApplet);
 }

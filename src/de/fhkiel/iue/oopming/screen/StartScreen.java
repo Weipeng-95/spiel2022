@@ -10,7 +10,7 @@ public class StartScreen extends Screen {
     }
 
     @Override
-    public void schowScreen(PApplet pApplet) {
+    public void showScreen(PApplet pApplet) {
         pApplet.image(getImage(), getCenter().getX(), getCenter().getY());
 //        pApplet.background(179, 134, 200);
         pApplet.textSize(30);

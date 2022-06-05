@@ -46,7 +46,7 @@ public class GameScreen extends Screen {
     }
 
     @Override
-    public void schowScreen(PApplet pApplet) {
+    public void showScreen(PApplet pApplet) {
 
         hintergrund(pApplet);
 

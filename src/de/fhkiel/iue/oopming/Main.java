@@ -41,13 +41,13 @@ public class Main extends PApplet {
         TIMER = millis();
 
         if (isInStart) {
-            startScreen.schowScreen(this);
+            startScreen.showScreen(this);
         }
         if (isInGame) {
-            gameScreen.schowScreen(this);
+            gameScreen.showScreen(this);
         }
         if (isInPause) {
-            pauseScreen.schowScreen(this);
+            pauseScreen.showScreen(this);
         }
     }
 
