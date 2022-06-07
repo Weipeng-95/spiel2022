@@ -19,7 +19,7 @@ public class Main extends PApplet {
 
     GameScreen gameScreen = new GameScreen();
     PauseScreen pauseScreen = new PauseScreen();
-    StartScreen startScreen = new StartScreen(this);
+    StartScreen startScreen = new StartScreen();
 
     public static void main(String[] args) {
         PApplet.main("de.fhkiel.iue.oopming.Main");
@@ -28,8 +28,8 @@ public class Main extends PApplet {
     public void setup() {
         isInStart = true;
         gameScreen.setup(this);
-        startScreen.setImage(loadImage("de/fhkiel/iue/oopming/images/hintergrundbild.png"));
-        pauseScreen.setImage(loadImage("de/fhkiel/iue/oopming/images/hintergrundbild.png"));
+        startScreen.setup(this);
+        pauseScreen.setup(this);
     }
 
     @Override

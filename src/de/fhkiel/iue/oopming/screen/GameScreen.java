@@ -1,14 +1,19 @@
 package de.fhkiel.iue.oopming.screen;
 
 import de.fhkiel.iue.oopming.Main;
+import de.fhkiel.iue.oopming.basic.PlaySound;
 import de.fhkiel.iue.oopming.character.Gegner;
 import de.fhkiel.iue.oopming.character.Geschoss;
 import de.fhkiel.iue.oopming.character.Player;
 import de.fhkiel.iue.oopming.basic.Position;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 import processing.data.IntList;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,19 +33,23 @@ public class GameScreen extends Screen {
     private int explosionImageFrame = 12;
     PImage[] explosionImage = new PImage[explosionImageFrame];
 
+
     public GameScreen() {
         player = new Player();
         gegners = new ArrayList<Gegner>();
         geschosse = new ArrayList<Geschoss>();
     }
 
+    @Override
     public void setup(PApplet pApplet) {
-        player.setupCharacter(pApplet);
-        pApplet.noCursor();
-        pApplet.noStroke();
+
+        setGameFont(pApplet.createFont("de/fhkiel/iue/oopming/font/thunderstrike3d.ttf", 50));
+        pApplet.textAlign(PConstants.CENTER);
         pApplet.imageMode(pApplet.CENTER);
+        player.setupCharacter(pApplet);
+
         //Erstelle 8 Instanzen des Gegners
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 5; i++) {
             gegners.add(new Gegner());
         }
         this.setImage(pApplet.loadImage("de/fhkiel/iue/oopming/images/hintergrundbild.png"));
@@ -78,6 +87,7 @@ public class GameScreen extends Screen {
             if (refreshIndex == explosionImageFrame - 1) {
                 refreshIndex = 0;
                 isExplotion = false;
+                new PlaySound("src/de/fhkiel/iue/oopming/Sound/explosionBgm.wav").start();
             }
         }
     }
@@ -160,6 +170,7 @@ public class GameScreen extends Screen {
                 Geschoss geschoss = new Geschoss(player.getCenter().getX(), player.getCenter().getY() - player.getImage().height / 2);
                 geschosse.add(geschoss);
                 geschoss.setupCharacter(pApplet);
+                new PlaySound("src/de/fhkiel/iue/oopming/Sound/shootBgm.wav").start();
             }
 
 
@@ -167,19 +178,12 @@ public class GameScreen extends Screen {
 
     }
 
-    //    public void playerInputControl(PApplet pApplet) {
-//        if (pApplet.keyCode == pApplet.RIGHT) right = !right;
-//        if (pApplet.keyCode == pApplet.LEFT) left = !left;
-//        if (pApplet.keyCode == pApplet.UP) up = !up;
-//        if (pApplet.keyCode == pApplet.DOWN) down = !down;
-//        if (pApplet.key == 'z') schiessen = !schiessen;
-//    }
-    public void playerInputControl(PApplet pApplet, boolean x) {
-        if (pApplet.keyCode == pApplet.RIGHT) right = x;
-        if (pApplet.keyCode == pApplet.LEFT) left = x;
-        if (pApplet.keyCode == pApplet.UP) up = x;
-        if (pApplet.keyCode == pApplet.DOWN) down = x;
-        if (pApplet.key == 'z') schiessen = x;
+    public void playerInputControl(PApplet pApplet, boolean flag) {
+        if (pApplet.keyCode == pApplet.RIGHT) right = flag;
+        if (pApplet.keyCode == pApplet.LEFT) left = flag;
+        if (pApplet.keyCode == pApplet.UP) up = flag;
+        if (pApplet.keyCode == pApplet.DOWN) down = flag;
+        if (pApplet.key == 'z') schiessen = flag;
     }
 
 
