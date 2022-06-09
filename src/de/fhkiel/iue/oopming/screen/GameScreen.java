@@ -132,10 +132,10 @@ public class GameScreen extends Screen {
                     enemyTemp.setResistance(enemyTemp.getResistance() - 1);
                     explosion = new ExploAnimation(enemyTemp);
                     isExploded = true;
+                    player.getBullets().remove(bullet);
                     if (enemyTemp.getResistance() < 1) {
                         player.setScore(player.getScore() + enemyTemp.getAward());
                         enemys.remove(enemyTemp);
-                        player.getBullets().remove(bullet);
                         enemys.add(randomEnemy());
                     }
                 }
@@ -165,7 +165,7 @@ public class GameScreen extends Screen {
     public static Enemy randomEnemy() {
         int type = (int) (Math.random() * 15); // [0,20)
         if (type == 0) {
-            return new Enemy(2, 5, 240, Main.bossEnemy);
+            return new Enemy(2, 5, 40, Main.bossEnemy);
         } else {
             return new Enemy(5, 1, 1, Main.enemy);
         }
