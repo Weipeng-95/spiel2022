@@ -2,20 +2,28 @@ package de.fhkiel.iue.oopming.character;
 
 import de.fhkiel.iue.oopming.Main;
 import de.fhkiel.iue.oopming.basic.FlyingObject;
+import de.fhkiel.iue.oopming.basic.PlaySound;
 import processing.core.PApplet;
 import processing.core.PImage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends FlyingObject {
     private PImage[] images;
     private int life;
-    private int score = 0;
+    public int score = 0;
     private int index = 0;
+    private int bulletsIntervall;
+    private List bullets;
 
     public Player() {
+        setLife(3);
         setSpeed(5);
         setX(Main.WIDTH / 2);
         setY(Main.HEIGHT - 100);
         setImage(Main.player0);
+        bullets = new ArrayList<Bullet>();
     }
 
     public PImage[] getImages() {
@@ -34,10 +42,6 @@ public class Player extends FlyingObject {
         this.life = life;
     }
 
-    public void subtractLife() {
-        life--;
-    }
-
     public int getScore() {
         return score;
     }
@@ -54,22 +58,36 @@ public class Player extends FlyingObject {
         this.index = index;
     }
 
-//    public Geschoss[] shoot(){
-//
-//
-//    }
+    public List getBullets() {
+        return bullets;
+    }
 
-    public boolean hit(FlyingObject other) {
+    public void shoot() {
+        if (bulletsIntervall % 4 == 0) {
+            Bullet bullet = new Bullet(getX(), getY() - getImage().height / 2);
+            bullets.add(bullet);
+            new PlaySound("src/de/fhkiel/iue/oopming/Sound/shootBgm.wav").start();
+        }
 
-        float x1 = other.getX() - this.getImage().width / 2;                 //x坐标最小距离
-        float x2 = other.getX() + this.getImage().width / 2 + other.getImage().width;   //x坐标最大距离
-        float y1 = other.getY() - this.getImage().height / 2;                //y坐标最小距离
-        float y2 = other.getY() + this.getImage().height / 2 + other.getImage().height; //y坐标最大距离
+    }
 
-        float herox = this.getX() + this.getImage().width / 2;               //英雄机x坐标中心点距离
-        float heroy = this.getX() + this.getImage().height / 2;              //英雄机y坐标中心点距离
+    public void bulletsGenerator(PApplet pApplet) {
+        bulletsIntervall++;
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet tempBullet = (Bullet) bullets.get(i);
+            tempBullet.drawCharacter(pApplet);
+            tempBullet.move();
+            if (tempBullet.outOfBounds()) {
+                bullets.remove(tempBullet);
+            }
+        }
+    }
 
-        return herox > x1 && herox < x2 && heroy > y1 && heroy < y2;   //区间范围内为撞上了
+    public boolean hit(FlyingObject object) {
+        return (getX() - getImage().width / 2 < object.getX() + object.getImage().width / 2 &&
+                getX() + getImage().width / 2 > object.getX() - object.getImage().width / 2 &&
+                getY() + getImage().height / 2 > object.getY() - object.getImage().height / 2 &&
+                getY() - getImage().height / 2 < object.getY() + object.getImage().height / 2);
     }
 
     @Override

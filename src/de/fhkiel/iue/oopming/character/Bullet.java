@@ -5,12 +5,12 @@ import de.fhkiel.iue.oopming.basic.FlyingObject;
 import processing.core.PApplet;
 
 
-public class Geschoss extends FlyingObject {
+public class Bullet extends FlyingObject {
 
-    public Geschoss() {
+    public Bullet() {
     }
 
-    public Geschoss(float x, float y) {
+    public Bullet(float x, float y) {
         setSpeed(8);
         setX(x);
         setY(y);

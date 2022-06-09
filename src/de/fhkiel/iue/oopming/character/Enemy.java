@@ -3,20 +3,23 @@ package de.fhkiel.iue.oopming.character;
 import de.fhkiel.iue.oopming.Main;
 import de.fhkiel.iue.oopming.basic.FlyingObject;
 import processing.core.PApplet;
+import processing.core.PImage;
 
-public class Gegner extends FlyingObject {
+public class Enemy extends FlyingObject {
 
     private int award;
     private int resistance;
 
 
-    public Gegner() {
+    public Enemy(int speed, int award, int resistance, PImage image) {
         // Initialisierung der zufälligen Position des Gegners
         // Zufallszahlen in einem bestimmten Bereich: int num = min + (int) (Math.random() * (max - min + 1));
-        setSpeed(5);
+        setSpeed(speed);
+        setAward(award);
+        setResistance(resistance);
         setX(50 / 2 + (float) (Math.random() * ((Main.WIDTH - 50 / 2) - 50 / 2 + 1)));
         setY(-(float) (Math.random() * (Main.WIDTH - 50 / 2)));
-        setImage(Main.enemy);
+        setImage(image);
     }
 
     public int getAward() {
@@ -36,11 +39,11 @@ public class Gegner extends FlyingObject {
     }
 
 
-    public boolean shootBy(Geschoss geschoss) {
-        return (this.getX() - getImage().width / 2 < geschoss.getX() + geschoss.getImage().width / 2 &&
-                this.getX() + getImage().width / 2 > geschoss.getX() - geschoss.getImage().width / 2 &&
-                this.getY() + getImage().height / 2 > geschoss.getY() + geschoss.getImage().height / 2 &&
-                this.getY() - getImage().height / 2 < geschoss.getY() - geschoss.getImage().height / 2);
+    public boolean shootBy(Bullet bullet) {
+        return (this.getX() - getImage().width / 2 < bullet.getX() + bullet.getImage().width / 2 &&
+                this.getX() + getImage().width / 2 > bullet.getX() - bullet.getImage().width / 2 &&
+                this.getY() + getImage().height / 2 > bullet.getY() + bullet.getImage().height / 2 &&
+                this.getY() - getImage().height / 2 < bullet.getY() - bullet.getImage().height / 2);
     }
 
     @Override
@@ -50,11 +53,11 @@ public class Gegner extends FlyingObject {
 
     @Override
     public void drawCharacter(PApplet pApplet) {
-        pApplet.image(Main.enemy, getX(), getY());
+        pApplet.image(getImage(), getX(), getY());
     }
 
     @Override
     public boolean outOfBounds() {
-        return getY() - Main.enemy.height / 2 > Main.HEIGHT;
+        return getY() - getImage().height / 2 > Main.HEIGHT;
     }
 }

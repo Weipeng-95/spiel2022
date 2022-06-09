@@ -2,12 +2,9 @@ package de.fhkiel.iue.oopming.screen;
 
 import de.fhkiel.iue.oopming.Main;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PFont;
 import processing.core.PImage;
-
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
 
 abstract public class Screen {
 
@@ -15,10 +12,6 @@ abstract public class Screen {
     private float y;
     private PImage image;
     private PFont gameFont;
-
-
-    public Screen() {
-    }
 
     public float getX() {
         return x;
@@ -61,7 +54,11 @@ abstract public class Screen {
         else return false;
     }
 
-    abstract public void setup(PApplet pApplet);
+    public void setup(PApplet pApplet) {
+        pApplet.imageMode(pApplet.CENTER);
+        pApplet.textAlign(PConstants.CENTER);
+        setGameFont(pApplet.createFont("de/fhkiel/iue/oopming/font/thunderstrikehalf.ttf", 50));
+    }
 
     abstract public void showScreen(PApplet pApplet);
 }

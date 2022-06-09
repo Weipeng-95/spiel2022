@@ -2,21 +2,18 @@ package de.fhkiel.iue.oopming.screen;
 
 import de.fhkiel.iue.oopming.Main;
 import de.fhkiel.iue.oopming.basic.PlaySound;
+import de.fhkiel.iue.oopming.character.Player;
 import processing.core.PApplet;
-import processing.core.PConstants;
 
 public class StartScreen extends Screen {
-
-
     public StartScreen() {
-        super();
-        setImage(Main.startBackground);
         new PlaySound("src/de/fhkiel/iue/oopming/Sound/startBgm.wav").start();
     }
 
     @Override
     public void setup(PApplet pApplet) {
-        setGameFont(pApplet.createFont("de/fhkiel/iue/oopming/font/thunderstrikehalf.ttf", 50));
+        super.setup(pApplet);
+        setImage(Main.startBackground);
         setX(Main.WIDTH / 2);
         setY(Main.HEIGHT / 2);
     }
@@ -24,7 +21,7 @@ public class StartScreen extends Screen {
     @Override
     public void showScreen(PApplet pApplet) {
         pApplet.textFont(getGameFont());
-        pApplet.image(Main.startBackground, getX(), getY());
+        pApplet.image(getImage(), getX(), getY());
         pApplet.textSize(35);
 
 
@@ -32,6 +29,7 @@ public class StartScreen extends Screen {
             pApplet.fill(147, 207, 222);
             if (pApplet.mousePressed) {
                 Main.isInGame = true;
+                Main.isGameover = false;
                 Main.isInStart = false;
             }
         } else {
