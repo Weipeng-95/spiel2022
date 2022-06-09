@@ -4,32 +4,37 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 abstract public class FlyingObject {
-    private int leben;
-    private Position center;
+    private float x;
+    private float y;
+    private int speed;
     private PImage image;
 
     public FlyingObject() {
     }
 
-    public FlyingObject(Position center, PImage image) {
-        this.center = center;
-        this.image = image;
+
+    public float getX() {
+        return x;
     }
 
-    public int getLeben() {
-        return leben;
+    public void setX(float x) {
+        this.x = x;
     }
 
-    public void setLeben(int leben) {
-        this.leben = leben;
+    public float getY() {
+        return y;
     }
 
-    public Position getCenter() {
-        return center;
+    public void setY(float y) {
+        this.y = y;
     }
 
-    public void setCenter(Position center) {
-        this.center = center;
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public PImage getImage() {
@@ -40,9 +45,8 @@ abstract public class FlyingObject {
         this.image = image;
     }
 
-    abstract public void setupCharacter(PApplet pApplet);
-
     abstract public void drawCharacter(PApplet pApplet);
+    public abstract void move();
 
-    abstract public boolean ausserhalbSpielFeld();
+    public abstract boolean outOfBounds();
 }

@@ -1,99 +1,62 @@
 package de.fhkiel.iue.oopming.screen;
 
+import de.fhkiel.iue.oopming.ExploAnimation;
 import de.fhkiel.iue.oopming.Main;
 import de.fhkiel.iue.oopming.basic.PlaySound;
-import de.fhkiel.iue.oopming.character.Gegner;
-import de.fhkiel.iue.oopming.character.Geschoss;
+import de.fhkiel.iue.oopming.character.Bullet;
+import de.fhkiel.iue.oopming.character.Enemy;
 import de.fhkiel.iue.oopming.character.Player;
-import de.fhkiel.iue.oopming.basic.Position;
 import processing.core.PApplet;
-import processing.core.PConstants;
-import processing.core.PImage;
-import processing.data.IntList;
 
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameScreen extends Screen {
+    protected static Player player;
+    private static List enemys;
 
-    Player player;
-    List gegners;
-    List geschosse;
-    IntList pKeys = new IntList();
-    private int geschossIntervall;
+    public static int score;
+//    private List bullets;
+
     private int imageMoveSpeed;
+    private ExploAnimation explosion;
+    public static boolean isExploded;
+    private boolean isRight, isLeft, isUp, isDown, isShooted;
 
-    private boolean right, left, up, down, schiessen;
-    private int refreshIndex = 0;
-    Position expos = new Position();
-    private boolean isExplotion = false;
-    private int explosionImageFrame = 12;
-    PImage[] explosionImage = new PImage[explosionImageFrame];
-
-
-    public GameScreen() {
-        player = new Player();
-        gegners = new ArrayList<Gegner>();
-        geschosse = new ArrayList<Geschoss>();
-    }
 
     @Override
     public void setup(PApplet pApplet) {
+        super.setup(pApplet);
+        enemys = new ArrayList<Enemy>();
 
-        setGameFont(pApplet.createFont("de/fhkiel/iue/oopming/font/thunderstrike3d.ttf", 50));
-        pApplet.textAlign(PConstants.CENTER);
-        pApplet.imageMode(pApplet.CENTER);
-        player.setupCharacter(pApplet);
+        player = new Player();
+        pApplet.textFont(getGameFont());
+        setImage(Main.background);
 
         //Erstelle 8 Instanzen des Gegners
-        for (int i = 0; i < 5; i++) {
-            gegners.add(new Gegner());
+        for (int i = 0; i < 8; i++) {
+            enemys.add(new Enemy(5, 1, 1, Main.enemy));
         }
-        this.setImage(pApplet.loadImage("de/fhkiel/iue/oopming/images/hintergrundbild.png"));
 
     }
 
     @Override
     public void showScreen(PApplet pApplet) {
 
-        hintergrund(pApplet);
+        drawHintergrund(pApplet);
 
-        player.drawCharacter(pApplet);
 
-        gegnerGenerator(pApplet);
+        drawPlayer(pApplet);
+        playerEnemyCollision(pApplet);
 
-        geschossGenerator(pApplet);
+        enemysGenerator(pApplet);
+        enemyBulletCollision(pApplet);
 
-        if (!player.isInRange()) {
-            if (player.getCenter().getX() <= player.getImage().width / 2)
-                player.getCenter().setX(player.getImage().width / 2);
-            if (player.getCenter().getX() >= Main.WIDTH - player.getImage().width / 2)
-                player.getCenter().setX(Main.WIDTH - player.getImage().width / 2);
-            if (player.getCenter().getY() <= player.getImage().height / 2)
-                player.getCenter().setY(player.getImage().height / 2);
-            if (player.getCenter().getY() >= Main.HEIGHT - player.getImage().height / 2)
-                player.getCenter().setY(Main.HEIGHT - player.getImage().height / 2);
-        }
-
-        if (isExplotion) {
-            for (int k = 0; k < explosionImage.length; k++) {
-                explosionImage[k] = pApplet.loadImage("de/fhkiel/iue/oopming/images/explosion1/explosion_" + k + ".png");
-            }
-            pApplet.image(explosionImage[refreshIndex], expos.getX(), expos.getY());
-            refreshIndex++;
-            if (refreshIndex == explosionImageFrame - 1) {
-                refreshIndex = 0;
-                isExplotion = false;
-                new PlaySound("src/de/fhkiel/iue/oopming/Sound/explosionBgm.wav").start();
-            }
-        }
+        showScore(pApplet);
+        showLife(pApplet);
     }
 
-
-    private void hintergrund(PApplet pApplet) {
+    private void drawHintergrund(PApplet pApplet) {
         imageMoveSpeed = Main.TIMER / 10;
         for (int i = -imageMoveSpeed; i < Main.HEIGHT; i += getImage().height) {
             pApplet.copy(getImage(), 0, 0, getImage().width, Main.HEIGHT,
@@ -101,92 +64,139 @@ public class GameScreen extends Screen {
         }
     }
 
-    private void geschossGenerator(PApplet pApplet) {
-        // lasst Geschoss nach bestimmter Zeit erzeugen
-        geschossIntervall++;
-//        if (geschossIntervall % 4 == 0) {
-//            Geschoss geschoss = new Geschoss(player.getCenter().getX(),
-//                    player.getCenter().getY() - player.getImage().height / 2);
-//
-//            geschosse.add(geschoss);
-//            geschoss.setupCharacter(pApplet);
-//        }
+    private void showScore(PApplet pApplet) {
+        pApplet.fill(255);
+        pApplet.textSize(25);
+        pApplet.text("score: " + player.getScore(), Main.WIDTH / 2, 40);
+    }
 
-        for (int i = 0; i < geschosse.size(); i++) {
-            Geschoss tempGeschoss = (Geschoss) geschosse.get(i);
-            tempGeschoss.drawCharacter(pApplet);
-            tempGeschoss.move();
-            if (tempGeschoss.ausserhalbSpielFeld()) {
-                geschosse.remove(tempGeschoss);
+    private void showLife(PApplet pApplet) {
+        pApplet.fill(255);
+        pApplet.textSize(25);
+        pApplet.text("life: " + player.getLife(), Main.WIDTH - 75, 40);
+    }
+
+    private void drawPlayer(PApplet pApplet) {
+        player.drawCharacter(pApplet);
+        if (!player.outOfBounds()) {
+            if (player.getX() <= player.getImage().width / 2)
+                player.setX(player.getImage().width / 2);
+            if (player.getX() >= Main.WIDTH - player.getImage().width / 2)
+                player.setX(Main.WIDTH - player.getImage().width / 2);
+            if (player.getY() <= player.getImage().height / 2)
+                player.setY(player.getImage().height / 2);
+            if (player.getY() >= Main.HEIGHT - player.getImage().height / 2)
+                player.setY(Main.HEIGHT - player.getImage().height / 2);
+        }
+        player.bulletsGenerator(pApplet);
+    }
+
+    private void playerEnemyCollision(PApplet pApplet) {
+        for (int i = 0; i < enemys.size(); i++) {
+            Enemy enemyTemp = (Enemy) enemys.get(i);
+            if (player.hit(enemyTemp)) {
+                enemys.remove(enemyTemp);
+//                player.setX(Main.WIDTH / 2);
+//                player.setY(Main.HEIGHT - 100);
+                player.setLife(player.getLife() - 1);
+                new PlaySound("src/de/fhkiel/iue/oopming/Sound/explosionBgm.wav").start();
+                enemys.add(randomEnemy());
             }
+        }
+        if (player.getLife() == 0) {
+            score = player.getScore();
+            Main.isGameover = true;
+            Main.isInGame = false;
         }
     }
 
-    private void gegnerGenerator(PApplet pApplet) {
-        for (int i = 0; i < gegners.size(); i++) {
+    private void enemysGenerator(PApplet pApplet) {
+        for (int i = 0; i < enemys.size(); i++) {
             //get Instance von Gegner
-            Gegner gegnerTemp = (Gegner) gegners.get(i);
-            gegnerTemp.drawCharacter(pApplet);
-            gegnerTemp.move();
-
-            if (gegnerTemp.ausserhalbSpielFeld()) {
-                gegners.remove(gegnerTemp); // Wenn Gegner außerhalber dem Spielfeld, löscht der Gegner
-                gegners.add(new Gegner()); // ein neuer Gegner herstellen
+            Enemy enemyTemp = (Enemy) enemys.get(i);
+            enemyTemp.drawCharacter(pApplet);
+            enemyTemp.move();
+            if (enemyTemp.outOfBounds()) {
+                enemys.remove(enemyTemp); // Wenn Gegner außerhalber dem Spielfeld, löscht der Gegner
+                enemys.add(randomEnemy()); // ein neuer Gegner herstellen
             }
-
-            for (int j = 0; j < geschosse.size(); j++) {
-                Geschoss geschoss = (Geschoss) geschosse.get(j);
-                if (geschoss.istErschossen(gegnerTemp, geschoss)) {
-                    gegners.remove(gegnerTemp);
-                    geschosse.remove(geschoss);
-                    gegners.add(new Gegner());
-
-                    isExplotion = true;
-                    expos = gegnerTemp.getCenter();
-
-                }
-
-            }
-
         }
     }
 
-    public void playerInput(PApplet pApplet) {
-
-        if (right) {
-            player.getCenter().setX(player.getCenter().getX() + player.getSpeed());
-        }
-        if (left) {
-            player.getCenter().setX(player.getCenter().getX() - player.getSpeed());
-        }
-        if (up) {
-            player.getCenter().setY(player.getCenter().getY() - player.getSpeed());
-        }
-        if (down) {
-            player.getCenter().setY(player.getCenter().getY() + player.getSpeed());
-        }
-        if (schiessen) {
-            if (geschossIntervall % 4 == 0) {
-                Geschoss geschoss = new Geschoss(player.getCenter().getX(), player.getCenter().getY() - player.getImage().height / 2);
-                geschosse.add(geschoss);
-                geschoss.setupCharacter(pApplet);
-                new PlaySound("src/de/fhkiel/iue/oopming/Sound/shootBgm.wav").start();
+    private void enemyBulletCollision(PApplet pApplet) {
+        for (int i = 0; i < enemys.size(); i++) {
+            Enemy enemyTemp = (Enemy) enemys.get(i);
+            for (int j = 0; j < player.getBullets().size(); j++) {
+                Bullet bullet = (Bullet) player.getBullets().get(j);
+                if (enemyTemp.shootBy(bullet)) {
+                    enemyTemp.setResistance(enemyTemp.getResistance() - 1);
+                    explosion = new ExploAnimation(enemyTemp);
+                    isExploded = true;
+                    if (enemyTemp.getResistance() < 1) {
+                        player.setScore(player.getScore() + enemyTemp.getAward());
+                        enemys.remove(enemyTemp);
+                        player.getBullets().remove(bullet);
+                        enemys.add(randomEnemy());
+                    }
+                }
             }
-
-
+            if (isExploded) {
+                explosion.drawExplosion(pApplet);
+            }
         }
+    }
 
+    public static void resetGame() {
+        player.setLife(3);
+        player.setScore(0);
+        player.setX(Main.WIDTH / 2);
+        player.setY(Main.HEIGHT - 100);
+        for (int i = 0; i < enemys.size(); i++) {
+            Enemy enemyTemp = (Enemy) enemys.get(i);
+            enemys.remove(enemyTemp);
+            enemys.add(randomEnemy());
+        }
+        for (int i = 0; i < player.getBullets().size(); i++) {
+            Bullet tempBullet = (Bullet) player.getBullets().get(i);
+            player.getBullets().remove(tempBullet);
+        }
+    }
+
+    public static Enemy randomEnemy() {
+        int type = (int) (Math.random() * 15); // [0,20)
+        if (type == 0) {
+            return new Enemy(2, 5, 240, Main.bossEnemy);
+        } else {
+            return new Enemy(5, 1, 1, Main.enemy);
+        }
+    }
+
+    public void playerInput() {
+
+        if (isRight) {
+            player.setX(player.getX() + player.getSpeed());
+        }
+        if (isLeft) {
+            player.setX(player.getX() - player.getSpeed());
+        }
+        if (isUp) {
+            player.setY(player.getY() - player.getSpeed());
+        }
+        if (isDown) {
+            player.setY(player.getY() + player.getSpeed());
+        }
+        if (isShooted) {
+            player.shoot();
+        }
     }
 
     public void playerInputControl(PApplet pApplet, boolean flag) {
-        if (pApplet.keyCode == pApplet.RIGHT) right = flag;
-        if (pApplet.keyCode == pApplet.LEFT) left = flag;
-        if (pApplet.keyCode == pApplet.UP) up = flag;
-        if (pApplet.keyCode == pApplet.DOWN) down = flag;
-        if (pApplet.key == 'z') schiessen = flag;
+        if (pApplet.keyCode == 39) isRight = flag;
+        if (pApplet.keyCode == 37) isLeft = flag;
+        if (pApplet.keyCode == 38) isUp = flag;
+        if (pApplet.keyCode == 40) isDown = flag;
+        if (pApplet.key == 'z' || pApplet.key == 'Z') isShooted = flag;
     }
-
-
 }
 
 
