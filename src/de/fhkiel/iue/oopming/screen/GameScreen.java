@@ -9,11 +9,10 @@ import de.fhkiel.iue.oopming.character.Player;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameScreen extends Screen {
     protected static Player player;
-    private static List enemys;
+    private static ArrayList enemys;
 
     public static int score;
 //    private List bullets;
@@ -44,7 +43,6 @@ public class GameScreen extends Screen {
     public void showScreen(PApplet pApplet) {
 
         drawHintergrund(pApplet);
-
 
         drawPlayer(pApplet);
         playerEnemyCollision(pApplet);
@@ -78,6 +76,7 @@ public class GameScreen extends Screen {
 
     private void drawPlayer(PApplet pApplet) {
         player.drawCharacter(pApplet);
+        player.move();
         if (!player.outOfBounds()) {
             if (player.getX() <= player.getImage().width / 2)
                 player.setX(player.getImage().width / 2);
@@ -95,19 +94,24 @@ public class GameScreen extends Screen {
         for (int i = 0; i < enemys.size(); i++) {
             Enemy enemyTemp = (Enemy) enemys.get(i);
             if (player.hit(enemyTemp)) {
+                explosion = new ExploAnimation(player);
+                isExploded = true;
                 enemys.remove(enemyTemp);
 //                player.setX(Main.WIDTH / 2);
 //                player.setY(Main.HEIGHT - 100);
                 player.setLife(player.getLife() - 1);
-                new PlaySound("src/de/fhkiel/iue/oopming/Sound/explosionBgm.wav").start();
                 enemys.add(randomEnemy());
             }
         }
-        if (player.getLife() == 0) {
+        if (isExploded) {
+            explosion.drawExplosion(pApplet, "src/de/fhkiel/iue/oopming/Sound/explosionBgm.wav");
+        }
+        if (!ExploAnimation.isInDrawExplosion && player.getLife() == 0) {
             score = player.getScore();
             Main.isGameover = true;
             Main.isInGame = false;
         }
+//        System.out.println(ExploAnimation.isInDrawExplosion);
     }
 
     private void enemysGenerator(PApplet pApplet) {
@@ -141,7 +145,7 @@ public class GameScreen extends Screen {
                 }
             }
             if (isExploded) {
-                explosion.drawExplosion(pApplet);
+                explosion.drawExplosion(pApplet, "src/de/fhkiel/iue/oopming/Sound/explosionBgm.wav");
             }
         }
     }
@@ -163,7 +167,7 @@ public class GameScreen extends Screen {
     }
 
     public static Enemy randomEnemy() {
-        int type = (int) (Math.random() * 15); // [0,20)
+        int type = (int) (Math.random() * 15);
         if (type == 0) {
             return new Enemy(2, 5, 40, Main.bossEnemy);
         } else {

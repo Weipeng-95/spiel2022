@@ -7,7 +7,6 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Player extends FlyingObject {
     private PImage[] images;
@@ -15,13 +14,14 @@ public class Player extends FlyingObject {
     public int score = 0;
     private int index = 0;
     private int bulletsIntervall;
-    private List bullets;
+    private ArrayList bullets;
 
     public Player() {
         setLife(3);
         setSpeed(5);
         setX(Main.WIDTH / 2);
         setY(Main.HEIGHT - 100);
+        images = new PImage[]{Main.player0, Main.player1};
         setImage(Main.player0);
         bullets = new ArrayList<Bullet>();
     }
@@ -58,7 +58,7 @@ public class Player extends FlyingObject {
         this.index = index;
     }
 
-    public List getBullets() {
+    public ArrayList getBullets() {
         return bullets;
     }
 
@@ -97,7 +97,9 @@ public class Player extends FlyingObject {
 
     @Override
     public void move() {
-
+        if (images.length > 0) {
+            setImage(images[index++ / 5 % images.length]);
+        }
     }
 
     @Override

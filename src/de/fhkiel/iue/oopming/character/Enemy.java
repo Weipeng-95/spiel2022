@@ -18,7 +18,7 @@ public class Enemy extends FlyingObject {
         setAward(award);
         setResistance(resistance);
         setX(50 / 2 + (float) (Math.random() * ((Main.WIDTH - 50 / 2) - 50 / 2 + 1)));
-        setY(-(float) (Math.random() * (Main.WIDTH - 50 / 2)));
+        setY(-(float) (Math.random() * Main.HEIGHT));
         setImage(image);
     }
 

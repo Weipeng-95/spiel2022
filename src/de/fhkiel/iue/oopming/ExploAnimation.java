@@ -9,6 +9,9 @@ public class ExploAnimation {
     private float x;
     private float y;
 
+    public static boolean isInDrawExplosion = false;
+
+    private int index = 0;
     private int refreshIndex = 0;
 
     public float getX() {
@@ -32,13 +35,16 @@ public class ExploAnimation {
         this.y = object.getY();
     }
 
-    public void drawExplosion(PApplet pApplet) {
-        pApplet.image(Main.explosion[refreshIndex], getX(), getY());
+    public void drawExplosion(PApplet pApplet, String soundFiel) {
+        isInDrawExplosion = true;
+        index = refreshIndex / 2;
+        pApplet.image(Main.explosion[index], getX(), getY());
         refreshIndex++;
-        if (refreshIndex  == Main.explosion.length - 1) {
-            refreshIndex = 0;
+        if (index == Main.explosion.length - 1) {
+            index = 0;
             GameScreen.isExploded = false;
-            new PlaySound("src/de/fhkiel/iue/oopming/Sound/explosionBgm.wav").start();
+            new PlaySound(soundFiel).start();
+            isInDrawExplosion = false;
         }
     }
 

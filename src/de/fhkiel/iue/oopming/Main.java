@@ -1,5 +1,6 @@
 package de.fhkiel.iue.oopming;
 
+import de.fhkiel.iue.oopming.basic.PlaySound;
 import de.fhkiel.iue.oopming.screen.GameScreen;
 import de.fhkiel.iue.oopming.screen.GameoverScreen;
 import de.fhkiel.iue.oopming.screen.PauseScreen;
@@ -7,8 +8,6 @@ import de.fhkiel.iue.oopming.screen.StartScreen;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.data.IntList;
-
-import java.lang.reflect.GenericArrayType;
 
 
 public class Main extends PApplet {
@@ -48,7 +47,7 @@ public class Main extends PApplet {
         bullet = loadImage("de/fhkiel/iue/oopming/images/Geschoss.png");
         startBackground = loadImage("de/fhkiel/iue/oopming/images/Startscreen.png");
         background = loadImage("de/fhkiel/iue/oopming/images/hintergrundbild.png");
-        explosion = new PImage[20];
+        explosion = new PImage[40];
         for (int i = 0; i < explosion.length; i++) {
             explosion[i] = loadImage("de/fhkiel/iue/oopming/images/explosion/explosion_" + i + ".png");
         }
@@ -68,8 +67,6 @@ public class Main extends PApplet {
 
     @Override
     public void draw() {
-        TIMER = millis();
-
         if (isInStart) {
             startScreen.showScreen(this);
 //            gameScreen.resetGame();
