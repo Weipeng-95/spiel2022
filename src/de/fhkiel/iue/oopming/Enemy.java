@@ -1,15 +1,10 @@
-package de.fhkiel.iue.oopming.character;
+package de.fhkiel.iue.oopming;
 
-import de.fhkiel.iue.oopming.Main;
-import de.fhkiel.iue.oopming.basic.FlyingObject;
-import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Enemy extends FlyingObject {
-
     private int award;
     private int resistance;
-
 
     public Enemy(int speed, int award, int resistance, PImage image) {
         // Initialisierung der zufälligen Position des Gegners
@@ -38,7 +33,6 @@ public class Enemy extends FlyingObject {
         this.resistance = resistance;
     }
 
-
     public boolean shootBy(Bullet bullet) {
         return (this.getX() - getImage().width / 2 < bullet.getX() + bullet.getImage().width / 2 &&
                 this.getX() + getImage().width / 2 > bullet.getX() - bullet.getImage().width / 2 &&
@@ -49,11 +43,6 @@ public class Enemy extends FlyingObject {
     @Override
     public void move() {
         setY(getY() + getSpeed());
-    }
-
-    @Override
-    public void drawCharacter(PApplet pApplet) {
-        pApplet.image(getImage(), getX(), getY());
     }
 
     @Override

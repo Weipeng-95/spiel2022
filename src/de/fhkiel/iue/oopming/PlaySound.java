@@ -1,4 +1,4 @@
-package de.fhkiel.iue.oopming.basic;
+package de.fhkiel.iue.oopming;
 
 import java.io.File;
 import java.io.IOException;

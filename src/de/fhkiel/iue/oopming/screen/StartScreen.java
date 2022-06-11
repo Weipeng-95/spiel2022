@@ -1,8 +1,7 @@
 package de.fhkiel.iue.oopming.screen;
 
 import de.fhkiel.iue.oopming.Main;
-import de.fhkiel.iue.oopming.basic.PlaySound;
-import de.fhkiel.iue.oopming.character.Player;
+import de.fhkiel.iue.oopming.PlaySound;
 import processing.core.PApplet;
 
 public class StartScreen extends Screen {
@@ -24,7 +23,6 @@ public class StartScreen extends Screen {
         pApplet.image(getImage(), getX(), getY());
         pApplet.textSize(35);
 
-
         if (isOnText(pApplet, "START", 590, 35)) {
             pApplet.fill(147, 207, 222);
             if (pApplet.mousePressed) {
@@ -36,7 +34,6 @@ public class StartScreen extends Screen {
             pApplet.fill(255);
         }
         pApplet.text("START", Main.WIDTH / 2, 590);
-
 
         if (isOnText(pApplet, "EXIT", 650, 35)) {
             pApplet.fill(147, 207, 222);

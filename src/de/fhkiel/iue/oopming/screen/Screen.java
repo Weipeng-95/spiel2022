@@ -54,7 +54,7 @@ abstract public class Screen {
         else return false;
     }
 
-    public void setup(PApplet pApplet) {
+    protected void setup(PApplet pApplet) {
         pApplet.imageMode(pApplet.CENTER);
         pApplet.textAlign(PConstants.CENTER);
         setGameFont(pApplet.createFont("de/fhkiel/iue/oopming/font/thunderstrikehalf.ttf", 50));

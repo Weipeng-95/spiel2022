@@ -2,22 +2,17 @@ package de.fhkiel.iue.oopming.screen;
 
 import de.fhkiel.iue.oopming.ExploAnimation;
 import de.fhkiel.iue.oopming.Main;
-import de.fhkiel.iue.oopming.basic.PlaySound;
-import de.fhkiel.iue.oopming.character.Bullet;
-import de.fhkiel.iue.oopming.character.Enemy;
-import de.fhkiel.iue.oopming.character.Player;
+import de.fhkiel.iue.oopming.Bullet;
+import de.fhkiel.iue.oopming.Enemy;
+import de.fhkiel.iue.oopming.Player;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
 
 public class GameScreen extends Screen {
     protected static Player player;
-    private static ArrayList enemys;
-
-    public static int score;
-//    private List bullets;
-
-    private int imageMoveSpeed;
+    private static ArrayList<Enemy> enemys = new ArrayList<>();
+    protected static int showScore;
     private ExploAnimation explosion;
     public static boolean isExploded;
     private boolean isRight, isLeft, isUp, isDown, isShooted;
@@ -26,13 +21,10 @@ public class GameScreen extends Screen {
     @Override
     public void setup(PApplet pApplet) {
         super.setup(pApplet);
-        enemys = new ArrayList<Enemy>();
-
         player = new Player();
         pApplet.textFont(getGameFont());
         setImage(Main.background);
 
-        //Erstelle 8 Instanzen des Gegners
         for (int i = 0; i < 8; i++) {
             enemys.add(new Enemy(5, 1, 1, Main.enemy));
         }
@@ -55,7 +47,7 @@ public class GameScreen extends Screen {
     }
 
     private void drawHintergrund(PApplet pApplet) {
-        imageMoveSpeed = Main.TIMER / 10;
+        int imageMoveSpeed = Main.TIMER / 10;
         for (int i = -imageMoveSpeed; i < Main.HEIGHT; i += getImage().height) {
             pApplet.copy(getImage(), 0, 0, getImage().width, Main.HEIGHT,
                     0, -i, getImage().width, Main.HEIGHT);
@@ -75,7 +67,7 @@ public class GameScreen extends Screen {
     }
 
     private void drawPlayer(PApplet pApplet) {
-        player.drawCharacter(pApplet);
+        pApplet.image(player.getImage(), player.getX(), player.getY());
         player.move();
         if (!player.outOfBounds()) {
             if (player.getX() <= player.getImage().width / 2)
@@ -92,8 +84,8 @@ public class GameScreen extends Screen {
 
     private void playerEnemyCollision(PApplet pApplet) {
         for (int i = 0; i < enemys.size(); i++) {
-            Enemy enemyTemp = (Enemy) enemys.get(i);
-            if (player.hit(enemyTemp)) {
+            Enemy enemyTemp = enemys.get(i);
+            if (player.hitBy(enemyTemp)) {
                 explosion = new ExploAnimation(player);
                 isExploded = true;
                 enemys.remove(enemyTemp);
@@ -106,10 +98,11 @@ public class GameScreen extends Screen {
         if (isExploded) {
             explosion.drawExplosion(pApplet, "src/de/fhkiel/iue/oopming/Sound/explosionBgm.wav");
         }
-        if (!ExploAnimation.isInDrawExplosion && player.getLife() == 0) {
-            score = player.getScore();
+        if (!ExploAnimation.isInDrawExplosion && player.getLife() <= 0) {
+            showScore = player.getScore();
             Main.isGameover = true;
             Main.isInGame = false;
+
         }
 //        System.out.println(ExploAnimation.isInDrawExplosion);
     }
@@ -117,8 +110,8 @@ public class GameScreen extends Screen {
     private void enemysGenerator(PApplet pApplet) {
         for (int i = 0; i < enemys.size(); i++) {
             //get Instance von Gegner
-            Enemy enemyTemp = (Enemy) enemys.get(i);
-            enemyTemp.drawCharacter(pApplet);
+            Enemy enemyTemp = enemys.get(i);
+            pApplet.image(enemyTemp.getImage(), enemyTemp.getX(), enemyTemp.getY());
             enemyTemp.move();
             if (enemyTemp.outOfBounds()) {
                 enemys.remove(enemyTemp); // Wenn Gegner außerhalber dem Spielfeld, löscht der Gegner
@@ -129,7 +122,7 @@ public class GameScreen extends Screen {
 
     private void enemyBulletCollision(PApplet pApplet) {
         for (int i = 0; i < enemys.size(); i++) {
-            Enemy enemyTemp = (Enemy) enemys.get(i);
+            Enemy enemyTemp = enemys.get(i);
             for (int j = 0; j < player.getBullets().size(); j++) {
                 Bullet bullet = (Bullet) player.getBullets().get(j);
                 if (enemyTemp.shootBy(bullet)) {
@@ -156,7 +149,7 @@ public class GameScreen extends Screen {
         player.setX(Main.WIDTH / 2);
         player.setY(Main.HEIGHT - 100);
         for (int i = 0; i < enemys.size(); i++) {
-            Enemy enemyTemp = (Enemy) enemys.get(i);
+            Enemy enemyTemp = enemys.get(i);
             enemys.remove(enemyTemp);
             enemys.add(randomEnemy());
         }

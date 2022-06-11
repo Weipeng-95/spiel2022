@@ -1,14 +1,6 @@
-package de.fhkiel.iue.oopming.character;
-
-import de.fhkiel.iue.oopming.Main;
-import de.fhkiel.iue.oopming.basic.FlyingObject;
-import processing.core.PApplet;
-
+package de.fhkiel.iue.oopming;
 
 public class Bullet extends FlyingObject {
-
-    public Bullet() {
-    }
 
     public Bullet(float x, float y) {
         setSpeed(8);
@@ -17,13 +9,9 @@ public class Bullet extends FlyingObject {
         setImage(Main.bullet);
     }
 
+    @Override
     public void move() {
         this.setY(getY() - getSpeed());
-    }
-
-    @Override
-    public void drawCharacter(PApplet pApplet) {
-        pApplet.image(Main.bullet, getX(), getY());
     }
 
     @Override
