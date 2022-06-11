@@ -35,16 +35,16 @@ public class Main extends PApplet {
     @Override
     public void setup() {
         isInStart = true;
-        player0 = loadImage("de/fhkiel/iue/oopming/images/Flugzeug-0.png");
-        player1 = loadImage("de/fhkiel/iue/oopming/images/Flugzeug-1.png");
-        enemy = loadImage("de/fhkiel/iue/oopming/images/Gegner-1.png");
-        bossEnemy = loadImage("de/fhkiel/iue/oopming/images/bossEnemyBgm.png");
-        bullet = loadImage("de/fhkiel/iue/oopming/images/Geschoss.png");
-        startBackground = loadImage("de/fhkiel/iue/oopming/images/Startscreen.png");
-        background = loadImage("de/fhkiel/iue/oopming/images/hintergrundbild.png");
+        player0 = loadImage("de/fhkiel/iue/oopming/resources/images/Flugzeug-0.png");
+        player1 = loadImage("de/fhkiel/iue/oopming/resources/images/Flugzeug-1.png");
+        enemy = loadImage("de/fhkiel/iue/oopming/resources/images/Gegner-1.png");
+        bossEnemy = loadImage("de/fhkiel/iue/oopming/resources/images/bossEnemyBgm.png");
+        bullet = loadImage("de/fhkiel/iue/oopming/resources/images/Geschoss.png");
+        startBackground = loadImage("de/fhkiel/iue/oopming/resources/images/Startscreen.png");
+        background = loadImage("de/fhkiel/iue/oopming/resources/images/hintergrundbild.png");
         explosion = new PImage[40];
         for (int i = 0; i < explosion.length; i++) {
-            explosion[i] = loadImage("de/fhkiel/iue/oopming/images/explosion/explosion_" + i + ".png");
+            explosion[i] = loadImage("de/fhkiel/iue/oopming/resources/images/explosion/explosion_" + i + ".png");
         }
 
         gameScreen.setup(this);

@@ -11,7 +11,7 @@ public class Player extends FlyingObject {
     private int life;
     private int score = 0;
     private int bulletsIntervall;
-            private ArrayList<Bullet> bullets;
+    private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
     public Player() {
         setLife(3);
@@ -20,7 +20,6 @@ public class Player extends FlyingObject {
         setY(Main.HEIGHT - 100);
         images = new PImage[]{Main.player0, Main.player1};
         setImage(Main.player0);
-        bullets = new ArrayList<Bullet>();
     }
 
     public int getLife() {
@@ -47,7 +46,7 @@ public class Player extends FlyingObject {
         if (bulletsIntervall % 4 == 0) {
             Bullet bullet = new Bullet(getX(), getY() - getImage().height / 2);
             bullets.add(bullet);
-            new PlaySound("src/de/fhkiel/iue/oopming/Sound/shootBgm.wav").start();
+            new PlaySound("src/de/fhkiel/iue/oopming/resources/sounds/shootBgm.wav").start();
         }
 
     }
@@ -55,7 +54,7 @@ public class Player extends FlyingObject {
     public void bulletsGenerator(PApplet pApplet) {
         bulletsIntervall++;
         for (int i = 0; i < bullets.size(); i++) {
-            Bullet tempBullet = (Bullet) bullets.get(i);
+            Bullet tempBullet = bullets.get(i);
             pApplet.image(tempBullet.getImage(), tempBullet.getX(), tempBullet.getY());
             tempBullet.move();
             if (tempBullet.outOfBounds()) {
