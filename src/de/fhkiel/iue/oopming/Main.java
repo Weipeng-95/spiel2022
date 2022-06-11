@@ -17,7 +17,7 @@ public class Main extends PApplet {
     StartScreen startScreen = new StartScreen();
     GameoverScreen gameoverScreen = new GameoverScreen();
 
-    public static boolean isInGame, isInPause, isInStart, isGameover;
+    public static boolean isInGame, isInPause, isInStart, isInGameover;
     public static PImage player0;
     public static PImage player1;
     public static PImage bullet;
@@ -72,7 +72,7 @@ public class Main extends PApplet {
             pauseScreen.showScreen(this);
         }
 
-        if (isGameover) {
+        if (isInGameover) {
             gameoverScreen.showScreen(this);
         }
     }
@@ -83,7 +83,9 @@ public class Main extends PApplet {
 
         if (keyCode == ENTER) {
             isInGame = true;
+            isInStart = false;
             isInPause = false;
+            isInGameover = false;
         }
         if (key == 'p' || key == 'P') {
             isInPause = true;

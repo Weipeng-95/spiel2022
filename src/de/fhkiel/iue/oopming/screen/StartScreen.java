@@ -27,7 +27,7 @@ public class StartScreen extends Screen {
             pApplet.fill(147, 207, 222);
             if (pApplet.mousePressed) {
                 Main.isInGame = true;
-                Main.isGameover = false;
+                Main.isInGameover = false;
                 Main.isInStart = false;
             }
         } else {

@@ -100,7 +100,7 @@ public class GameScreen extends Screen {
         }
         if (!ExploAnimation.isInDrawExplosion && player.getLife() <= 0) {
             showScore = player.getScore();
-            Main.isGameover = true;
+            Main.isInGameover = true;
             Main.isInGame = false;
 
         }
