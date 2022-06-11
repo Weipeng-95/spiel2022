@@ -96,7 +96,7 @@ public class GameScreen extends Screen {
             }
         }
         if (isExploded) {
-            explosion.drawExplosion(pApplet, "src/de/fhkiel/iue/oopming/Sound/explosionBgm.wav");
+            explosion.drawExplosion(pApplet, "src/de/fhkiel/iue/oopming/resources/sounds/explosionBgm.wav");
         }
         if (!ExploAnimation.isInDrawExplosion && player.getLife() <= 0) {
             showScore = player.getScore();
@@ -138,7 +138,7 @@ public class GameScreen extends Screen {
                 }
             }
             if (isExploded) {
-                explosion.drawExplosion(pApplet, "src/de/fhkiel/iue/oopming/Sound/explosionBgm.wav");
+                explosion.drawExplosion(pApplet, "src/de/fhkiel/iue/oopming/resources/sounds/explosionBgm.wav");
             }
         }
     }

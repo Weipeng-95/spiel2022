@@ -6,7 +6,7 @@ import processing.core.PApplet;
 
 public class StartScreen extends Screen {
     public StartScreen() {
-        new PlaySound("src/de/fhkiel/iue/oopming/Sound/startBgm.wav").start();
+        new PlaySound("src/de/fhkiel/iue/oopming/resources/sounds/startBgm.wav").start();
     }
 
     @Override
