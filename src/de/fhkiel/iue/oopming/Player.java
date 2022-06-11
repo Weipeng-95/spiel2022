@@ -1,37 +1,26 @@
-package de.fhkiel.iue.oopming.character;
+package de.fhkiel.iue.oopming;
 
-import de.fhkiel.iue.oopming.Main;
-import de.fhkiel.iue.oopming.basic.FlyingObject;
-import de.fhkiel.iue.oopming.basic.PlaySound;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Player extends FlyingObject {
     private PImage[] images;
-    private int life;
-    public int score = 0;
     private int index = 0;
+    private int life;
+    private int score = 0;
     private int bulletsIntervall;
-    private List bullets;
+            private ArrayList<Bullet> bullets;
 
     public Player() {
         setLife(3);
         setSpeed(5);
         setX(Main.WIDTH / 2);
         setY(Main.HEIGHT - 100);
+        images = new PImage[]{Main.player0, Main.player1};
         setImage(Main.player0);
         bullets = new ArrayList<Bullet>();
-    }
-
-    public PImage[] getImages() {
-        return images;
-    }
-
-    public void setImages(PImage[] images) {
-        this.images = images;
     }
 
     public int getLife() {
@@ -50,15 +39,7 @@ public class Player extends FlyingObject {
         this.score = score;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    public List getBullets() {
+    public ArrayList getBullets() {
         return bullets;
     }
 
@@ -75,7 +56,7 @@ public class Player extends FlyingObject {
         bulletsIntervall++;
         for (int i = 0; i < bullets.size(); i++) {
             Bullet tempBullet = (Bullet) bullets.get(i);
-            tempBullet.drawCharacter(pApplet);
+            pApplet.image(tempBullet.getImage(), tempBullet.getX(), tempBullet.getY());
             tempBullet.move();
             if (tempBullet.outOfBounds()) {
                 bullets.remove(tempBullet);
@@ -83,21 +64,19 @@ public class Player extends FlyingObject {
         }
     }
 
-    public boolean hit(FlyingObject object) {
-        return (getX() - getImage().width / 2 < object.getX() + object.getImage().width / 2 &&
-                getX() + getImage().width / 2 > object.getX() - object.getImage().width / 2 &&
-                getY() + getImage().height / 2 > object.getY() - object.getImage().height / 2 &&
-                getY() - getImage().height / 2 < object.getY() + object.getImage().height / 2);
+    public boolean hitBy(Enemy enemy) {
+        return (getX() - getImage().width / 2 < enemy.getX() + enemy.getImage().width / 2 &&
+                getX() + getImage().width / 2 > enemy.getX() - enemy.getImage().width / 2 &&
+                getY() + getImage().height / 2 > enemy.getY() - enemy.getImage().height / 2 &&
+                getY() - getImage().height / 2 < enemy.getY() + enemy.getImage().height / 2);
     }
 
-    @Override
-    public void drawCharacter(PApplet pApplet) {
-        pApplet.image(getImage(), getX(), getY());
-    }
 
     @Override
     public void move() {
-
+        if (images.length > 0) {
+            setImage(images[index++ / 5 % images.length]);
+        }
     }
 
     @Override

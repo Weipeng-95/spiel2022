@@ -6,17 +6,11 @@ import de.fhkiel.iue.oopming.screen.PauseScreen;
 import de.fhkiel.iue.oopming.screen.StartScreen;
 import processing.core.PApplet;
 import processing.core.PImage;
-import processing.data.IntList;
-
-import java.lang.reflect.GenericArrayType;
-
 
 public class Main extends PApplet {
     public static final int WIDTH = 500;
     public static final int HEIGHT = 800;
     public static int TIMER;
-    IntList pKeys = new IntList();
-
 
     GameScreen gameScreen = new GameScreen();
     PauseScreen pauseScreen = new PauseScreen();
@@ -48,11 +42,10 @@ public class Main extends PApplet {
         bullet = loadImage("de/fhkiel/iue/oopming/images/Geschoss.png");
         startBackground = loadImage("de/fhkiel/iue/oopming/images/Startscreen.png");
         background = loadImage("de/fhkiel/iue/oopming/images/hintergrundbild.png");
-        explosion = new PImage[20];
+        explosion = new PImage[40];
         for (int i = 0; i < explosion.length; i++) {
             explosion[i] = loadImage("de/fhkiel/iue/oopming/images/explosion/explosion_" + i + ".png");
         }
-
 
         gameScreen.setup(this);
         startScreen.setup(this);
@@ -68,11 +61,8 @@ public class Main extends PApplet {
 
     @Override
     public void draw() {
-        TIMER = millis();
-
         if (isInStart) {
             startScreen.showScreen(this);
-//            gameScreen.resetGame();
         }
         if (isInGame) {
             gameScreen.showScreen(this);
@@ -91,11 +81,11 @@ public class Main extends PApplet {
     public void keyPressed() {
         gameScreen.playerInputControl(this, true);
 
-        if (key == 's') {
+        if (keyCode == ENTER) {
             isInGame = true;
             isInPause = false;
         }
-        if (key == 'p') {
+        if (key == 'p' || key == 'P') {
             isInPause = true;
             isInGame = false;
         }

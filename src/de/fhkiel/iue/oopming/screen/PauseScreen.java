@@ -2,7 +2,6 @@ package de.fhkiel.iue.oopming.screen;
 
 import de.fhkiel.iue.oopming.Main;
 import processing.core.PApplet;
-import processing.core.PConstants;
 
 public class PauseScreen extends Screen {
     public PauseScreen() {

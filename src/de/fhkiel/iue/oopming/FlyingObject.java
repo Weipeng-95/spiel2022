@@ -1,6 +1,5 @@
-package de.fhkiel.iue.oopming.basic;
+package de.fhkiel.iue.oopming;
 
-import processing.core.PApplet;
 import processing.core.PImage;
 
 abstract public class FlyingObject {
@@ -8,10 +7,6 @@ abstract public class FlyingObject {
     private float y;
     private int speed;
     private PImage image;
-
-    public FlyingObject() {
-    }
-
 
     public float getX() {
         return x;
@@ -45,8 +40,7 @@ abstract public class FlyingObject {
         this.image = image;
     }
 
-    abstract public void drawCharacter(PApplet pApplet);
-    public abstract void move();
+    abstract public void move();
 
-    public abstract boolean outOfBounds();
+    abstract public boolean outOfBounds();
 }

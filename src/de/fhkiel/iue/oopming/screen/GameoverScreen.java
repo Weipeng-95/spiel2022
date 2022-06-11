@@ -1,10 +1,10 @@
 package de.fhkiel.iue.oopming.screen;
 
 import de.fhkiel.iue.oopming.Main;
-import de.fhkiel.iue.oopming.character.Player;
 import processing.core.PApplet;
 
 public class GameoverScreen extends Screen {
+
     public GameoverScreen() {
         setX(Main.WIDTH / 2);
         setY(Main.HEIGHT / 2);
@@ -26,7 +26,7 @@ public class GameoverScreen extends Screen {
         pApplet.text("GAMEOVER", Main.WIDTH / 2, Main.HEIGHT / 2 - 150);
         pApplet.textSize(40);
         pApplet.fill(147, 207, 222);
-        pApplet.text("you got " + GameScreen.score+ " points", Main.WIDTH / 2, Main.HEIGHT / 2 - 50);
+        pApplet.text("you got " + GameScreen.showScore + " points", Main.WIDTH / 2, Main.HEIGHT / 2 - 50);
 
         GameScreen.resetGame();
 
@@ -34,9 +34,9 @@ public class GameoverScreen extends Screen {
         if (isOnText(pApplet, "RESTART", Main.HEIGHT / 2 + 120, 35)) {
             pApplet.fill(147, 207, 222);
             if (pApplet.mousePressed) {
-                Main.isInStart = true;
+                Main.isInStart = false;
                 Main.isGameover = false;
-                Main.isInGame = false;
+                Main.isInGame = true;
             }
         } else {
             pApplet.fill(255);
