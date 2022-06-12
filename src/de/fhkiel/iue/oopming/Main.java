@@ -10,13 +10,8 @@ import processing.core.PImage;
 public class Main extends PApplet {
     public static final int WIDTH = 500;
     public static final int HEIGHT = 800;
-
-    GameScreen gameScreen = new GameScreen();
-    PauseScreen pauseScreen = new PauseScreen();
-    StartScreen startScreen = new StartScreen();
-    GameOverScreen gameOverScreen = new GameOverScreen();
-
     public static boolean isInGame, isInPause, isInStart, isInGameOver;
+
     public static PImage player0;
     public static PImage player1;
     public static PImage bullet;
@@ -26,6 +21,10 @@ public class Main extends PApplet {
     public static PImage startBackground;
     public static PImage[] explosion = new PImage[40];
 
+    GameScreen gameScreen = new GameScreen();
+    PauseScreen pauseScreen = new PauseScreen();
+    StartScreen startScreen = new StartScreen();
+    GameOverScreen gameOverScreen = new GameOverScreen();
 
     public static void main(String[] args) {
         PApplet.main("de.fhkiel.iue.oopming.Main");
