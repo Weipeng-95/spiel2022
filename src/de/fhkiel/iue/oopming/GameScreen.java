@@ -1,21 +1,17 @@
-package de.fhkiel.iue.oopming.screen;
+package de.fhkiel.iue.oopming;
 
-import de.fhkiel.iue.oopming.ExploAnimation;
-import de.fhkiel.iue.oopming.Main;
-import de.fhkiel.iue.oopming.Bullet;
-import de.fhkiel.iue.oopming.Enemy;
-import de.fhkiel.iue.oopming.Player;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
 
 public class GameScreen extends Screen {
-    protected static Player player;
-    private static final ArrayList<Enemy> enemys = new ArrayList<>();
-    protected static int showScore;
-    private ExploAnimation explosion;
+    private int backgroundMoveSpeed;
     public static boolean isExploded;
-    private int imageMoveSpeed;
+    protected static int showScore;
+    protected static Player player;
+    private ExploAnimation explosion;
+    private static final ArrayList<Enemy> enemies = new ArrayList<>();
+
 
     @Override
     public void setup(PApplet pApplet) {
@@ -25,7 +21,7 @@ public class GameScreen extends Screen {
         setImage(Main.background);
 
         for (int i = 0; i < 8; i++) {
-            enemys.add(new Enemy(5, 1, 1, Main.enemy));
+            enemies.add(new Enemy(5, 1, 1, Main.enemy));
         }
 
     }
@@ -33,21 +29,21 @@ public class GameScreen extends Screen {
     @Override
     public void showScreen(PApplet pApplet) {
 
-        drawHintergrund(pApplet);
+        drawBackground(pApplet);
 
         drawPlayer(pApplet);
         playerEnemyCollision(pApplet);
 
-        enemysGenerator(pApplet);
+        enemiesGenerator(pApplet);
         enemyBulletCollision(pApplet);
 
         showScore(pApplet);
         showLife(pApplet);
     }
 
-    private void drawHintergrund(PApplet pApplet) {
-        imageMoveSpeed++;
-        for (int i = -imageMoveSpeed; i < Main.HEIGHT; i += getImage().height) {
+    private void drawBackground(PApplet pApplet) {
+        backgroundMoveSpeed++;
+        for (int i = -backgroundMoveSpeed; i < Main.HEIGHT; i += getImage().height) {
             pApplet.copy(getImage(), 0, 0, getImage().width, Main.HEIGHT,
                     0, -i, getImage().width, Main.HEIGHT);
         }
@@ -83,16 +79,16 @@ public class GameScreen extends Screen {
     }
 
     private void playerEnemyCollision(PApplet pApplet) {
-        for (int i = 0; i < enemys.size(); i++) {
-            Enemy enemyTemp = enemys.get(i);
-            if (player.hitBy(enemyTemp)) {
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy enemyTemp = enemies.get(i);
+            if (player.isHitBy(enemyTemp)) {
                 explosion = new ExploAnimation(player);
                 isExploded = true;
-                enemys.remove(enemyTemp);
+                enemies.remove(enemyTemp);
 //                player.setX(Main.WIDTH / 2);
 //                player.setY(Main.HEIGHT - 100);
                 player.setLife(player.getLife() - 1);
-                enemys.add(randomEnemy());
+                enemies.add(randomEnemy());
             }
         }
         if (isExploded) {
@@ -107,22 +103,22 @@ public class GameScreen extends Screen {
 //        System.out.println(ExploAnimation.isInDrawExplosion);
     }
 
-    private void enemysGenerator(PApplet pApplet) {
-        for (int i = 0; i < enemys.size(); i++) {
+    private void enemiesGenerator(PApplet pApplet) {
+        for (int i = 0; i < enemies.size(); i++) {
             //get Instance von Gegner
-            Enemy enemyTemp = enemys.get(i);
+            Enemy enemyTemp = enemies.get(i);
             pApplet.image(enemyTemp.getImage(), enemyTemp.getX(), enemyTemp.getY());
             enemyTemp.move();
             if (enemyTemp.outOfBounds()) {
-                enemys.remove(enemyTemp); // Wenn Gegner außerhalber dem Spielfeld, löscht der Gegner
-                enemys.add(randomEnemy()); // ein neuer Gegner herstellen
+                enemies.remove(enemyTemp); // Wenn Gegner außerhalber dem Spielfeld, löscht der Gegner
+                enemies.add(randomEnemy()); // ein neuer Gegner herstellen
             }
         }
     }
 
     private void enemyBulletCollision(PApplet pApplet) {
-        for (int i = 0; i < enemys.size(); i++) {
-            Enemy enemyTemp = enemys.get(i);
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy enemyTemp = enemies.get(i);
             for (int j = 0; j < player.getBullets().size(); j++) {
                 Bullet bullet = (Bullet) player.getBullets().get(j);
                 if (enemyTemp.shootBy(bullet)) {
@@ -132,8 +128,8 @@ public class GameScreen extends Screen {
                     player.getBullets().remove(bullet);
                     if (enemyTemp.getResistance() < 1) {
                         player.setScore(player.getScore() + enemyTemp.getAward());
-                        enemys.remove(enemyTemp);
-                        enemys.add(randomEnemy());
+                        enemies.remove(enemyTemp);
+                        enemies.add(randomEnemy());
                     }
                 }
             }
@@ -148,10 +144,10 @@ public class GameScreen extends Screen {
         player.setScore(0);
         player.setX(Main.WIDTH / 2);
         player.setY(Main.HEIGHT - 100);
-        for (int i = 0; i < enemys.size(); i++) {
-            Enemy enemyTemp = enemys.get(i);
-            enemys.remove(enemyTemp);
-            enemys.add(randomEnemy());
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy enemyTemp = enemies.get(i);
+            enemies.remove(enemyTemp);
+            enemies.add(randomEnemy());
         }
         for (int i = 0; i < player.getBullets().size(); i++) {
             Bullet tempBullet = (Bullet) player.getBullets().get(i);

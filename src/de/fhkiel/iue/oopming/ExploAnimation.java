@@ -1,6 +1,5 @@
 package de.fhkiel.iue.oopming;
 
-import de.fhkiel.iue.oopming.screen.GameScreen;
 import processing.core.PApplet;
 
 public class ExploAnimation {
