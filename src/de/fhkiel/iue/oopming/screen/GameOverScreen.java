@@ -3,9 +3,9 @@ package de.fhkiel.iue.oopming.screen;
 import de.fhkiel.iue.oopming.Main;
 import processing.core.PApplet;
 
-public class GameoverScreen extends Screen {
+public class GameOverScreen extends Screen {
 
-    public GameoverScreen() {
+    public GameOverScreen() {
         setX(Main.WIDTH / 2);
         setY(Main.HEIGHT / 2);
     }
@@ -35,7 +35,7 @@ public class GameoverScreen extends Screen {
             pApplet.fill(147, 207, 222);
             if (pApplet.mousePressed) {
                 Main.isInStart = false;
-                Main.isInGameover = false;
+                Main.isInGameOver = false;
                 Main.isInGame = true;
             }
         } else {

@@ -11,12 +11,11 @@ import java.util.ArrayList;
 
 public class GameScreen extends Screen {
     protected static Player player;
-    private static ArrayList<Enemy> enemys = new ArrayList<>();
+    private static final ArrayList<Enemy> enemys = new ArrayList<>();
     protected static int showScore;
     private ExploAnimation explosion;
     public static boolean isExploded;
-    private boolean isRight, isLeft, isUp, isDown, isShooted;
-
+    private int imageMoveSpeed;
 
     @Override
     public void setup(PApplet pApplet) {
@@ -47,7 +46,7 @@ public class GameScreen extends Screen {
     }
 
     private void drawHintergrund(PApplet pApplet) {
-        int imageMoveSpeed = Main.TIMER / 10;
+        imageMoveSpeed++;
         for (int i = -imageMoveSpeed; i < Main.HEIGHT; i += getImage().height) {
             pApplet.copy(getImage(), 0, 0, getImage().width, Main.HEIGHT,
                     0, -i, getImage().width, Main.HEIGHT);
@@ -69,6 +68,7 @@ public class GameScreen extends Screen {
     private void drawPlayer(PApplet pApplet) {
         pApplet.image(player.getImage(), player.getX(), player.getY());
         player.move();
+        player.animation();
         if (!player.outOfBounds()) {
             if (player.getX() <= player.getImage().width / 2)
                 player.setX(player.getImage().width / 2);
@@ -100,7 +100,7 @@ public class GameScreen extends Screen {
         }
         if (!ExploAnimation.isInDrawExplosion && player.getLife() <= 0) {
             showScore = player.getScore();
-            Main.isInGameover = true;
+            Main.isInGameOver = true;
             Main.isInGame = false;
 
         }
@@ -168,32 +168,6 @@ public class GameScreen extends Screen {
         }
     }
 
-    public void playerInput() {
-
-        if (isRight) {
-            player.setX(player.getX() + player.getSpeed());
-        }
-        if (isLeft) {
-            player.setX(player.getX() - player.getSpeed());
-        }
-        if (isUp) {
-            player.setY(player.getY() - player.getSpeed());
-        }
-        if (isDown) {
-            player.setY(player.getY() + player.getSpeed());
-        }
-        if (isShooted) {
-            player.shoot();
-        }
-    }
-
-    public void playerInputControl(PApplet pApplet, boolean flag) {
-        if (pApplet.keyCode == 39) isRight = flag;
-        if (pApplet.keyCode == 37) isLeft = flag;
-        if (pApplet.keyCode == 38) isUp = flag;
-        if (pApplet.keyCode == 40) isDown = flag;
-        if (pApplet.key == 'z' || pApplet.key == 'Z') isShooted = flag;
-    }
 }
 
 

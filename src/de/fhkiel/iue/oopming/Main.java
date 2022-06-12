@@ -1,7 +1,7 @@
 package de.fhkiel.iue.oopming;
 
 import de.fhkiel.iue.oopming.screen.GameScreen;
-import de.fhkiel.iue.oopming.screen.GameoverScreen;
+import de.fhkiel.iue.oopming.screen.GameOverScreen;
 import de.fhkiel.iue.oopming.screen.PauseScreen;
 import de.fhkiel.iue.oopming.screen.StartScreen;
 import processing.core.PApplet;
@@ -10,14 +10,13 @@ import processing.core.PImage;
 public class Main extends PApplet {
     public static final int WIDTH = 500;
     public static final int HEIGHT = 800;
-    public static int TIMER;
 
     GameScreen gameScreen = new GameScreen();
     PauseScreen pauseScreen = new PauseScreen();
     StartScreen startScreen = new StartScreen();
-    GameoverScreen gameoverScreen = new GameoverScreen();
+    GameOverScreen gameOverScreen = new GameOverScreen();
 
-    public static boolean isInGame, isInPause, isInStart, isInGameover;
+    public static boolean isInGame, isInPause, isInStart, isInGameOver;
     public static PImage player0;
     public static PImage player1;
     public static PImage bullet;
@@ -25,7 +24,7 @@ public class Main extends PApplet {
     public static PImage bossEnemy;
     public static PImage background;
     public static PImage startBackground;
-    public static PImage[] explosion;
+    public static PImage[] explosion = new PImage[40];
 
 
     public static void main(String[] args) {
@@ -42,7 +41,6 @@ public class Main extends PApplet {
         bullet = loadImage("de/fhkiel/iue/oopming/resources/images/Geschoss.png");
         startBackground = loadImage("de/fhkiel/iue/oopming/resources/images/Startscreen.png");
         background = loadImage("de/fhkiel/iue/oopming/resources/images/hintergrundbild.png");
-        explosion = new PImage[40];
         for (int i = 0; i < explosion.length; i++) {
             explosion[i] = loadImage("de/fhkiel/iue/oopming/resources/images/explosion/explosion_" + i + ".png");
         }
@@ -50,12 +48,11 @@ public class Main extends PApplet {
         gameScreen.setup(this);
         startScreen.setup(this);
         pauseScreen.setup(this);
-        gameoverScreen.setup(this);
+        gameOverScreen.setup(this);
     }
 
     @Override
     public void settings() {
-        // Spielfeld
         size(WIDTH, HEIGHT);
     }
 
@@ -66,26 +63,23 @@ public class Main extends PApplet {
         }
         if (isInGame) {
             gameScreen.showScreen(this);
-            gameScreen.playerInput();
         }
         if (isInPause) {
             pauseScreen.showScreen(this);
         }
-
-        if (isInGameover) {
-            gameoverScreen.showScreen(this);
+        if (isInGameOver) {
+            gameOverScreen.showScreen(this);
         }
     }
 
 
     public void keyPressed() {
-        gameScreen.playerInputControl(this, true);
-
+        Player.inputControl(this, true);
         if (keyCode == ENTER) {
             isInGame = true;
             isInStart = false;
             isInPause = false;
-            isInGameover = false;
+            isInGameOver = false;
         }
         if (key == 'p' || key == 'P') {
             isInPause = true;
@@ -94,7 +88,7 @@ public class Main extends PApplet {
     }
 
     public void keyReleased() {
-        gameScreen.playerInputControl(this, false);
+        Player.inputControl(this, false);
     }
 
 }
