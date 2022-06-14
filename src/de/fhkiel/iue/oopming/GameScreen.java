@@ -158,7 +158,7 @@ public class GameScreen extends Screen {
     public static Enemy randomEnemy() {
         int type = (int) (Math.random() * 15);
         if (type == 0) {
-            return new Enemy(2, 5, 40, Main.bossEnemy);
+            return new Enemy(2, 5, 25, Main.bossEnemy);
         } else {
             return new Enemy(5, 1, 1, Main.enemy);
         }
