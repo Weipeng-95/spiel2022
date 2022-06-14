@@ -1,5 +1,7 @@
-package de.fhkiel.iue.oopming;
+package de.fhkiel.iue.oopming.screens;
 
+import de.fhkiel.iue.oopming.Main;
+import de.fhkiel.iue.oopming.PlaySound;
 import processing.core.PApplet;
 
 public class StartScreen extends Screen {

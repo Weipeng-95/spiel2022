@@ -1,4 +1,4 @@
-package de.fhkiel.iue.oopming;
+package de.fhkiel.iue.oopming.screens;
 
 import de.fhkiel.iue.oopming.Main;
 import processing.core.PApplet;

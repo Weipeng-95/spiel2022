@@ -1,5 +1,6 @@
-package de.fhkiel.iue.oopming;
+package de.fhkiel.iue.oopming.screens;
 
+import de.fhkiel.iue.oopming.*;
 import processing.core.PApplet;
 
 import java.util.ArrayList;

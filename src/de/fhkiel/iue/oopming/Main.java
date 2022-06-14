@@ -1,5 +1,9 @@
 package de.fhkiel.iue.oopming;
 
+import de.fhkiel.iue.oopming.screens.GameOverScreen;
+import de.fhkiel.iue.oopming.screens.GameScreen;
+import de.fhkiel.iue.oopming.screens.PauseScreen;
+import de.fhkiel.iue.oopming.screens.StartScreen;
 import processing.core.PApplet;
 import processing.core.PImage;
 
