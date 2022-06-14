@@ -21,7 +21,7 @@ public class GameScreen extends Screen {
         setImage(Main.background);
 
         for (int i = 0; i < 8; i++) {
-            enemies.add(new Enemy(5, 1, 1, Main.enemy));
+            enemies.add(new Enemy(5, 1, 1, Main.enemy1));
         }
 
     }
@@ -159,8 +159,9 @@ public class GameScreen extends Screen {
         int type = (int) (Math.random() * 15);
         if (type == 0) {
             return new Enemy(2, 5, 25, Main.bossEnemy);
-        } else {
-            return new Enemy(5, 1, 1, Main.enemy);
+        } else if (type == 1) return new Enemy(3, 2, 8, Main.enemy2);
+        else {
+            return new Enemy(5, 1, 1, Main.enemy1);
         }
     }
 

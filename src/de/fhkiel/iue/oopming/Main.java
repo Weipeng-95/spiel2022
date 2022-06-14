@@ -11,7 +11,8 @@ public class Main extends PApplet {
     public static PImage player0;
     public static PImage player1;
     public static PImage bullet;
-    public static PImage enemy;
+    public static PImage enemy1;
+    public static PImage enemy2;
     public static PImage bossEnemy;
     public static PImage background;
     public static PImage startBackground;
@@ -31,7 +32,8 @@ public class Main extends PApplet {
         isInStart = true;
         player0 = loadImage("de/fhkiel/iue/oopming/resources/images/Flugzeug-0.png");
         player1 = loadImage("de/fhkiel/iue/oopming/resources/images/Flugzeug-1.png");
-        enemy = loadImage("de/fhkiel/iue/oopming/resources/images/Gegner-1.png");
+        enemy1 = loadImage("de/fhkiel/iue/oopming/resources/images/Gegner-1.png");
+        enemy2 = loadImage("de/fhkiel/iue/oopming/resources/images/Gegner-2.png");
         bossEnemy = loadImage("de/fhkiel/iue/oopming/resources/images/bossEnemyBgm.png");
         bullet = loadImage("de/fhkiel/iue/oopming/resources/images/Geschoss.png");
         startBackground = loadImage("de/fhkiel/iue/oopming/resources/images/Startscreen.png");
