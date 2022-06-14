@@ -1,4 +1,4 @@
-package de.fhkiel.iue.oopming.screen;
+package de.fhkiel.iue.oopming.screens;
 
 import de.fhkiel.iue.oopming.Main;
 import de.fhkiel.iue.oopming.PlaySound;
@@ -27,7 +27,7 @@ public class StartScreen extends Screen {
             pApplet.fill(147, 207, 222);
             if (pApplet.mousePressed) {
                 Main.isInGame = true;
-                Main.isGameover = false;
+                Main.isInGameOver = false;
                 Main.isInStart = false;
             }
         } else {

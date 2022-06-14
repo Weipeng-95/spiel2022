@@ -6,12 +6,13 @@ import processing.core.PImage;
 import java.util.ArrayList;
 
 public class Player extends FlyingObject {
-    private PImage[] images;
     private int index = 0;
     private int life;
     private int score = 0;
     private int bulletsIntervall;
-    private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+    private static boolean isRight, isLeft, isUp, isDown, isShooted;
+    private final PImage[] images;
+    private final ArrayList<Bullet> bullets = new ArrayList<>();
 
     public Player() {
         setLife(3);
@@ -38,7 +39,7 @@ public class Player extends FlyingObject {
         this.score = score;
     }
 
-    public ArrayList getBullets() {
+    public ArrayList<Bullet> getBullets() {
         return bullets;
     }
 
@@ -63,18 +64,44 @@ public class Player extends FlyingObject {
         }
     }
 
-    public boolean hitBy(Enemy enemy) {
+    public void animation() {
+        if (images.length > 0) {
+            setImage(images[index++ / 5 % images.length]);
+        }
+    }
+
+    public boolean isHitBy(Enemy enemy) {
         return (getX() - getImage().width / 2 < enemy.getX() + enemy.getImage().width / 2 &&
                 getX() + getImage().width / 2 > enemy.getX() - enemy.getImage().width / 2 &&
                 getY() + getImage().height / 2 > enemy.getY() - enemy.getImage().height / 2 &&
                 getY() - getImage().height / 2 < enemy.getY() + enemy.getImage().height / 2);
     }
 
+    public static void inputControl(PApplet pApplet, boolean flag) {
+        if (pApplet.keyCode == 39) isRight = flag;
+        if (pApplet.keyCode == 37) isLeft = flag;
+        if (pApplet.keyCode == 38) isUp = flag;
+        if (pApplet.keyCode == 40) isDown = flag;
+        if (pApplet.key == 'z' || pApplet.key == 'Z') isShooted = flag;
+    }
+
 
     @Override
     public void move() {
-        if (images.length > 0) {
-            setImage(images[index++ / 5 % images.length]);
+        if (isRight) {
+            setX(getX() + getSpeed());
+        }
+        if (isLeft) {
+            setX(getX() - getSpeed());
+        }
+        if (isUp) {
+            setY(getY() - getSpeed());
+        }
+        if (isDown) {
+            setY(getY() + getSpeed());
+        }
+        if (isShooted) {
+            shoot();
         }
     }
 

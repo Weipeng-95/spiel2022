@@ -1,4 +1,4 @@
-package de.fhkiel.iue.oopming.screen;
+package de.fhkiel.iue.oopming.screens;
 
 import de.fhkiel.iue.oopming.Main;
 import processing.core.PApplet;
@@ -36,7 +36,6 @@ abstract public class Screen {
     public void setImage(PImage image) {
         this.image = image;
     }
-
 
     public PFont getGameFont() {
         return gameFont;

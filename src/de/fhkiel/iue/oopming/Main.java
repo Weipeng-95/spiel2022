@@ -1,32 +1,31 @@
 package de.fhkiel.iue.oopming;
 
-import de.fhkiel.iue.oopming.screen.GameScreen;
-import de.fhkiel.iue.oopming.screen.GameoverScreen;
-import de.fhkiel.iue.oopming.screen.PauseScreen;
-import de.fhkiel.iue.oopming.screen.StartScreen;
+import de.fhkiel.iue.oopming.screens.GameOverScreen;
+import de.fhkiel.iue.oopming.screens.GameScreen;
+import de.fhkiel.iue.oopming.screens.PauseScreen;
+import de.fhkiel.iue.oopming.screens.StartScreen;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Main extends PApplet {
     public static final int WIDTH = 500;
     public static final int HEIGHT = 800;
-    public static int TIMER;
+    public static boolean isInGame, isInPause, isInStart, isInGameOver;
+
+    public static PImage player0;
+    public static PImage player1;
+    public static PImage bullet;
+    public static PImage enemy1;
+    public static PImage enemy2;
+    public static PImage bossEnemy;
+    public static PImage background;
+    public static PImage startBackground;
+    public static PImage[] explosion = new PImage[40];
 
     GameScreen gameScreen = new GameScreen();
     PauseScreen pauseScreen = new PauseScreen();
     StartScreen startScreen = new StartScreen();
-    GameoverScreen gameoverScreen = new GameoverScreen();
-
-    public static boolean isInGame, isInPause, isInStart, isGameover;
-    public static PImage player0;
-    public static PImage player1;
-    public static PImage bullet;
-    public static PImage enemy;
-    public static PImage bossEnemy;
-    public static PImage background;
-    public static PImage startBackground;
-    public static PImage[] explosion;
-
+    GameOverScreen gameOverScreen = new GameOverScreen();
 
     public static void main(String[] args) {
         PApplet.main("de.fhkiel.iue.oopming.Main");
@@ -37,12 +36,12 @@ public class Main extends PApplet {
         isInStart = true;
         player0 = loadImage("de/fhkiel/iue/oopming/resources/images/Flugzeug-0.png");
         player1 = loadImage("de/fhkiel/iue/oopming/resources/images/Flugzeug-1.png");
-        enemy = loadImage("de/fhkiel/iue/oopming/resources/images/Gegner-1.png");
+        enemy1 = loadImage("de/fhkiel/iue/oopming/resources/images/Gegner-1.png");
+        enemy2 = loadImage("de/fhkiel/iue/oopming/resources/images/Gegner-2.png");
         bossEnemy = loadImage("de/fhkiel/iue/oopming/resources/images/bossEnemyBgm.png");
         bullet = loadImage("de/fhkiel/iue/oopming/resources/images/Geschoss.png");
         startBackground = loadImage("de/fhkiel/iue/oopming/resources/images/Startscreen.png");
         background = loadImage("de/fhkiel/iue/oopming/resources/images/hintergrundbild.png");
-        explosion = new PImage[40];
         for (int i = 0; i < explosion.length; i++) {
             explosion[i] = loadImage("de/fhkiel/iue/oopming/resources/images/explosion/explosion_" + i + ".png");
         }
@@ -50,12 +49,11 @@ public class Main extends PApplet {
         gameScreen.setup(this);
         startScreen.setup(this);
         pauseScreen.setup(this);
-        gameoverScreen.setup(this);
+        gameOverScreen.setup(this);
     }
 
     @Override
     public void settings() {
-        // Spielfeld
         size(WIDTH, HEIGHT);
     }
 
@@ -66,24 +64,23 @@ public class Main extends PApplet {
         }
         if (isInGame) {
             gameScreen.showScreen(this);
-            gameScreen.playerInput();
         }
         if (isInPause) {
             pauseScreen.showScreen(this);
         }
-
-        if (isGameover) {
-            gameoverScreen.showScreen(this);
+        if (isInGameOver) {
+            gameOverScreen.showScreen(this);
         }
     }
 
 
     public void keyPressed() {
-        gameScreen.playerInputControl(this, true);
-
+        Player.inputControl(this, true);
         if (keyCode == ENTER) {
             isInGame = true;
+            isInStart = false;
             isInPause = false;
+            isInGameOver = false;
         }
         if (key == 'p' || key == 'P') {
             isInPause = true;
@@ -92,7 +89,7 @@ public class Main extends PApplet {
     }
 
     public void keyReleased() {
-        gameScreen.playerInputControl(this, false);
+        Player.inputControl(this, false);
     }
 
 }
