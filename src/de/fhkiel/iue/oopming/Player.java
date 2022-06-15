@@ -13,7 +13,7 @@ public class Player extends FlyingObject {
     private static boolean isRight, isLeft, isUp, isDown, isShooted;
     private final PImage[] images;
     private final ArrayList<Bullet> bullets = new ArrayList<>();
-    private Sound sound = new Sound();
+    private SoundEffect sound = new SoundEffect();
 
     public Player() {
         setLife(3);

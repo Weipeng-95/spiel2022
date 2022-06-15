@@ -9,7 +9,7 @@ public class ExploAnimation {
     public static boolean isInDrawExplosion = false;
     private int refreshIndex = 0;
 
-    private Sound sound = new Sound();
+    private SoundEffect sound = new SoundEffect();
 
 
     public float getX() {

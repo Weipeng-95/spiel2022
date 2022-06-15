@@ -1,7 +1,6 @@
 package de.fhkiel.iue.oopming.screens;
 
 import de.fhkiel.iue.oopming.Main;
-import de.fhkiel.iue.oopming.Sound;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PFont;
