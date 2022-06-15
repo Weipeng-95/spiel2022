@@ -9,7 +9,9 @@ public class ExploAnimation {
     public static boolean isInDrawExplosion = false;
     private int refreshIndex = 0;
 
-    
+    private SoundEffect sound = new SoundEffect();
+
+
     public float getX() {
         return x;
     }
@@ -23,14 +25,17 @@ public class ExploAnimation {
         this.y = object.getY();
     }
 
-    public void drawExplosion(PApplet pApplet, String soundFiel) {
+    public void drawExplosion(PApplet pApplet) {
         isInDrawExplosion = true;
         int index = refreshIndex / 2;
         pApplet.image(Main.explosion[index], getX(), getY());
         refreshIndex++;
         if (index == Main.explosion.length - 1) {
             GameScreen.isExploded = false;
-            new PlaySound(soundFiel).start();
+//            new PlaySound(soundFiel).start();
+            sound.soundDoc("src/de/fhkiel/iue/oopming/resources/sounds/explosionBgm.wav");
+            sound.playNoLoop();
+
             isInDrawExplosion = false;
         }
     }

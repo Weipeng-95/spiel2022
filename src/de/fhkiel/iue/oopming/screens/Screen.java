@@ -7,11 +7,11 @@ import processing.core.PFont;
 import processing.core.PImage;
 
 abstract public class Screen {
-
     private float x;
     private float y;
     private PImage image;
     private PFont gameFont;
+
 
     public float getX() {
         return x;

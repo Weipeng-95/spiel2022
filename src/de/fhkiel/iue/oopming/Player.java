@@ -13,6 +13,7 @@ public class Player extends FlyingObject {
     private static boolean isRight, isLeft, isUp, isDown, isShooted;
     private final PImage[] images;
     private final ArrayList<Bullet> bullets = new ArrayList<>();
+    private SoundEffect sound = new SoundEffect();
 
     public Player() {
         setLife(3);
@@ -44,10 +45,12 @@ public class Player extends FlyingObject {
     }
 
     public void shoot() {
+
         if (bulletsIntervall % 4 == 0) {
             Bullet bullet = new Bullet(getX(), getY() - getImage().height / 2);
             bullets.add(bullet);
-            new PlaySound("src/de/fhkiel/iue/oopming/resources/sounds/shootBgm.wav").start();
+            sound.soundDoc("src/de/fhkiel/iue/oopming/resources/sounds/shootBgm.wav");
+            sound.playNoLoop();
         }
 
     }
