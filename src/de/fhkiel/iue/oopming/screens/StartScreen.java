@@ -1,12 +1,15 @@
 package de.fhkiel.iue.oopming.screens;
 
 import de.fhkiel.iue.oopming.Main;
-import de.fhkiel.iue.oopming.PlaySound;
+import de.fhkiel.iue.oopming.Sound;
 import processing.core.PApplet;
 
 public class StartScreen extends Screen {
+    private Sound sound = new Sound();
+
     public StartScreen() {
-        new PlaySound("src/de/fhkiel/iue/oopming/resources/sounds/startBgm.wav").start();
+        sound.soundDoc("src/de/fhkiel/iue/oopming/resources/sounds/startBgm.wav");
+        sound.playLoop();
     }
 
     @Override

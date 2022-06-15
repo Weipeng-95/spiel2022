@@ -1,17 +1,18 @@
 package de.fhkiel.iue.oopming.screens;
 
 import de.fhkiel.iue.oopming.Main;
+import de.fhkiel.iue.oopming.Sound;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PFont;
 import processing.core.PImage;
 
 abstract public class Screen {
-
     private float x;
     private float y;
     private PImage image;
     private PFont gameFont;
+
 
     public float getX() {
         return x;
