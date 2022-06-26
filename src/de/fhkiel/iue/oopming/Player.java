@@ -45,10 +45,16 @@ public class Player extends FlyingObject {
     }
 
     public void shoot() {
-
+        // Dadurch kann die Geschosse nach einem bestimmten Zeitintervall abgefeuert werden.
         if (bulletsIntervall % 4 == 0) {
             Bullet bullet = new Bullet(getX(), getY() - getImage().height / 2);
             bullets.add(bullet);
+
+            /* !!!!
+            Der folgende Code führt dazu, dass das Programm auf dem
+            Windows-PC abstürzt, aber nicht auf dem Mac.
+            Ursache hat noch nicht gefunden
+             */
             sound.soundDoc("src/de/fhkiel/iue/oopming/resources/sounds/shootBgm.wav");
             sound.playNoLoop();
         }
@@ -68,12 +74,14 @@ public class Player extends FlyingObject {
     }
 
     public void animation() {
+        // Dies erzeugt eine Animation von Player
         if (images.length > 0) {
             setImage(images[index++ / 5 % images.length]);
         }
     }
 
     public boolean isHitBy(Enemy enemy) {
+        // Erkannt, wenn Plyaer mit einem Feind kollidierte
         return (getX() - getImage().width / 2 < enemy.getX() + enemy.getImage().width / 2 &&
                 getX() + getImage().width / 2 > enemy.getX() - enemy.getImage().width / 2 &&
                 getY() + getImage().height / 2 > enemy.getY() - enemy.getImage().height / 2 &&
@@ -85,7 +93,7 @@ public class Player extends FlyingObject {
         if (pApplet.keyCode == 37) isLeft = flag;
         if (pApplet.keyCode == 38) isUp = flag;
         if (pApplet.keyCode == 40) isDown = flag;
-        if (pApplet.key == 'z' || pApplet.key == 'Z') isShooted = flag;
+        if (pApplet.key == 's' || pApplet.key == 'S') isShooted = flag;
     }
 
 
@@ -110,6 +118,7 @@ public class Player extends FlyingObject {
 
     @Override
     public boolean outOfBounds() {
+        // Erkannt, ab Player außerhalb des Spielfelds
         return getX() >= getImage().width / 2 &&
                 getX() <= Main.WIDTH - getImage().width / 2 &&
                 getY() >= getImage().height / 2 &&

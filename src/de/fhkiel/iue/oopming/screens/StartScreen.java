@@ -8,6 +8,7 @@ public class StartScreen extends Screen {
     private SoundEffect sound = new SoundEffect();
 
     public StartScreen() {
+        // Hintergrundmusik wir geloopt
         sound.soundDoc("src/de/fhkiel/iue/oopming/resources/sounds/startBgm.wav");
         sound.playLoop();
     }
@@ -26,7 +27,7 @@ public class StartScreen extends Screen {
         pApplet.image(getImage(), getX(), getY());
         pApplet.textSize(35);
 
-        if (isOnText(pApplet, "START", 590, 35)) {
+        if (isOnText(pApplet, "START", 530, 35)) {
             pApplet.fill(147, 207, 222);
             if (pApplet.mousePressed) {
                 Main.isInGame = true;
@@ -36,15 +37,15 @@ public class StartScreen extends Screen {
         } else {
             pApplet.fill(255);
         }
-        pApplet.text("START", Main.WIDTH / 2, 590);
+        pApplet.text("START", Main.WIDTH / 2, 530);
 
-        if (isOnText(pApplet, "EXIT", 650, 35)) {
+        if (isOnText(pApplet, "EXIT", 585, 35)) {
             pApplet.fill(147, 207, 222);
             if (pApplet.mousePressed) {
                 pApplet.exit();
             }
         } else pApplet.fill(255);
-        pApplet.text("EXIT", Main.WIDTH / 2, 650);
+        pApplet.text("EXIT", Main.WIDTH / 2, 585);
 
     }
 

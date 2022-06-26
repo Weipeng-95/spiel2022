@@ -22,6 +22,7 @@ public class GameScreen extends Screen {
         setImage(Main.background);
 
         for (int i = 0; i < 8; i++) {
+            // 8 Gegner werden in Arraylist gespeichert
             enemies.add(new Enemy(5, 1, 1, Main.enemy1));
         }
 
@@ -29,7 +30,7 @@ public class GameScreen extends Screen {
 
     @Override
     public void showScreen(PApplet pApplet) {
-
+        // Game-Loop
         drawBackground(pApplet);
 
         drawPlayer(pApplet);
@@ -128,6 +129,7 @@ public class GameScreen extends Screen {
                     isExploded = true;
                     player.getBullets().remove(bullet);
                     if (enemyTemp.getResistance() < 1) {
+                        // Wenn Beständigkeit fortgeschrittener Gegner kleine als 1 ist, wird besiegt
                         player.setScore(player.getScore() + enemyTemp.getAward());
                         enemies.remove(enemyTemp);
                         enemies.add(randomEnemy());
@@ -141,6 +143,7 @@ public class GameScreen extends Screen {
     }
 
     public static void resetGame() {
+        // Wenn Player kein Leben mehr, werden Spieldaten wiederhergestellt
         player.setLife(3);
         player.setScore(0);
         player.setX(Main.WIDTH / 2);
@@ -157,11 +160,14 @@ public class GameScreen extends Screen {
     }
 
     public static Enemy randomEnemy() {
+        // Verschiedene Gegner mit unterschiedliche Eingenschaften werden erzeugt, indem verschiedenen Parameter übergegeben werden
         int type = (int) (Math.random() * 15);
         if (type == 0) {
+            // Fortgeschrittene Gegner werden mit niedriger Möglichkeit erzeugt
             return new Enemy(2, 5, 25, Main.bossEnemy);
         } else if (type == 1) return new Enemy(3, 2, 8, Main.enemy2);
         else {
+            // Normale Gegner werden mit größter Möglichkeit erzeugt
             return new Enemy(5, 1, 1, Main.enemy1);
         }
     }

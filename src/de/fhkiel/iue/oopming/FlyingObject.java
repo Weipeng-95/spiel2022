@@ -40,7 +40,7 @@ abstract public class FlyingObject {
         this.image = image;
     }
 
+    // Die abstrakten Funktionen werden von Unterklassen überschrieben
     abstract public void move();
-
     abstract public boolean outOfBounds();
 }
