@@ -54,11 +54,13 @@ public class Main extends PApplet {
 
     @Override
     public void settings() {
+        // Große des Spielfelds wird festgestellt
         size(WIDTH, HEIGHT);
     }
 
     @Override
     public void draw() {
+        //Screen-Controller
         if (isInStart) {
             startScreen.showScreen(this);
         }
@@ -73,8 +75,9 @@ public class Main extends PApplet {
         }
     }
 
-
+// mit den Funktionen keyPressed() und keyReleased() können Charakterbewegung und Geschossschießen gleichzeitig durchgeführt werden.
     public void keyPressed() {
+
         Player.inputControl(this, true);
         if (keyCode == ENTER) {
             isInGame = true;

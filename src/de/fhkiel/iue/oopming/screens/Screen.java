@@ -46,6 +46,7 @@ abstract public class Screen {
     }
 
     protected boolean isOnText(PApplet pApplet, String text, int textHeightPos, int textSize) {
+        // Erkennt, ab Maussieger auf den Text ist
         if (pApplet.mouseX > Main.WIDTH / 2 - pApplet.textWidth(text) / 2 &&
                 pApplet.mouseX < Main.WIDTH / 2 + pApplet.textWidth(text) / 2 &&
                 pApplet.mouseY > textHeightPos - textSize + 10 &&

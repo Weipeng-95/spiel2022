@@ -34,6 +34,7 @@ public class Enemy extends FlyingObject {
     }
 
     public boolean shootBy(Bullet bullet) {
+        // Erkannt, wenn Gegner mit Geschoss kollidierte
         return (this.getX() - getImage().width / 2 < bullet.getX() + bullet.getImage().width / 2 &&
                 this.getX() + getImage().width / 2 > bullet.getX() - bullet.getImage().width / 2 &&
                 this.getY() + getImage().height / 2 > bullet.getY() + bullet.getImage().height / 2 &&

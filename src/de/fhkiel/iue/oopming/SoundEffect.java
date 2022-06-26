@@ -25,6 +25,7 @@ public class SoundEffect {
         this.clip = clip;
     }
 
+    // Audiodatei wird übergegeben
     public void soundDoc(String soundSource) {
         try {
             setBgm(AudioSystem.getClip());
@@ -35,6 +36,7 @@ public class SoundEffect {
         }
     }
 
+    // Audio wird einmal durchgeführt
     public void playNoLoop() {
         try {
             bgm.open(clip);
@@ -44,6 +46,7 @@ public class SoundEffect {
         }
     }
 
+    // Audio wird geloopt
     public void playLoop() {
         try {
             bgm.open(clip);
